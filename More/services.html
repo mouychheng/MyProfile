@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>សេវាកម្ម - Services</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <!-- Background Canvas សម្រាប់ចលនាផ្ទៃមេឃ -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- ទីតាំងទាញយក Header ដោយស្វ័យប្រវត្តិ -->
+    <div id="header-container"></div>
+
+    <main class="services-container">
+        <!-- Section Header -->
+        <section class="section-header fade-in">
+            <h2 class="section-title">សេវាកម្ម និង <span>ដំណោះស្រាយ</span> របស់យើង</h2>
+            <p class="section-subtitle">រចនា និងអភិវឌ្ឍន៍វេបសាយប្រកបដោយគុណភាព ល្បឿនលឿន និងទាក់ទាញភ្នែក។</p>
+        </section>
+
+        <!-- Services Grid Section -->
+        <section class="cards-section">
+            <div class="cards-grid">
+                <div class="card card-hover-effect">
+                    <div class="icon-box"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3>Web Development</h3>
+                    <p>បង្កើតគេហទំព័រផ្ទាល់ខ្លួន អាជីវកម្ម និងប្រព័ន្ធគ្រប់គ្រងផ្សេងៗប្រកបដោយស្ដង់ដារខ្ពស់។</p>
+                </div>
+                <div class="card card-hover-effect">
+                    <div class="icon-box"><i class="fa-solid fa-paintbrush"></i></div>
+                    <h3>UI/UX Design</h3>
+                    <p>រចនាប្លង់មុនពេលសរសេរកូដ ផ្តោតលើភាពស្រស់ស្អាត ងាយស្រួលប្រើ និងទំនើប។</p>
+                </div>
+                <div class="card card-hover-effect">
+                    <div class="icon-box"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                    <h3>Responsive Design</h3>
+                    <p>ធានាថាវេបសាយរបស់អ្នកបង្ហាញបានយ៉ាងល្អឥតខ្ចោះលើទូរស័ព្ទ ថែប្លេត និងកុំព្យូទ័រ។</p>
+                </div>
+                <div class="card card-hover-effect">
+                    <div class="icon-box"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>Speed Optimization</h3>
+                    <p>បង្កើនល្បឿនដំណើរការវេបសាយឱ្យលឿន និងមានសុវត្ថិភាពខ្ពស់បំផុត។</p>
+                </div>
+                <div class="card card-hover-effect">
+                    <div class="icon-box"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h3>CSS Animation</h3>
+                    <p>បន្ថែមចលនារស់រវើកទាក់ទាញភ្នែក និងផ្ដល់បទពិសោធន៍ដ៏អស្ចារ្យដល់អ្នកទស្សនា។</p>
+                </div>
+                <div class="card card-hover-effect">
+                    <div class="icon-box"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                    <h3>GitHub Hosting</h3>
+                    <p>រៀបចំ កែសម្រួល និង Deploy វេបសាយឡើងលើ GitHub Pages ដោយរលូន និងសុវត្ថិភាព។</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="workflow-section">
+            <h2 class="section-title" style="text-align: center; margin: 60px 0 30px 0;">ដំណើរការនៃការ <span>បំពេញការងារ</span></h2>
+            <div class="workflow-grid">
+                <div class="workflow-card">
+                    <span class="step-num">01</span>
+                    <h3>ពិភាក្សា និងប្រមូលព័ត៌មាន</h3>
+                    <p>ស្វែងយល់ពីតម្រូវការ គោលបំណង និងរចនាប័ទ្មដែលអ្នកចង់បាន។</p>
+                </div>
+                <div class="workflow-card">
+                    <span class="step-num">02</span>
+                    <h3>រចនា និងសរសេរកូដ</h3>
+                    <p>ចាប់ផ្តើមរៀបចំ Layout និងសរសេរកូដ HTML, CSS, JavaScript យ៉ាងផ្ចិតផ្ចង់។</p>
+                </div>
+                <div class="workflow-card">
+                    <span class="step-num">03</span>
+                    <h3>ដាក់ឱ្យដំណើរការ (Hosting)</h3>
+                    <p>ធ្វើការតេស្តល្បឿន និង Deploy ឡើងលើ GitHub Pages ជាផ្លូវការ។</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Packages Section -->
+        <section class="pricing-section">
+            <h2 class="section-title" style="text-align: center; margin: 60px 0 30px 0;">កញ្ចប់តម្លៃ និង <span>សេវាកម្ម</span></h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <div class="price">$49<span> / គម្រោង</span></div>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> 1 ទំព័រដើម (Single Page)</li>
+                        <li><i class="fa-solid fa-check"></i> Responsive គ្រប់ឧបករណ៍</li>
+                        <li><i class="fa-solid fa-check"></i> CSS Animation พื้นฐาน</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-secondary" style="display: block; text-align: center; margin-top: 20px;">ជ្រើសរើស</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="badge">ពេញនិយម</div>
+                    <h3>Standard</h3>
+                    <div class="price">$79<span> / គម្រោង</span></div>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> 3-5 ទំព័រ (Multi-pages)</li>
+                        <li><i class="fa-solid fa-check"></i> Header & Footer ស្ដង់ដារ</li>
+                        <li><i class="fa-solid fa-check"></i> Advanced Animations</li>
+                        <li><i class="fa-solid fa-check"></i> GitHub Deployment</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-primary" style="display: block; text-align: center; margin-top: 20px;">ជ្រើសរើស</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Premium</h3>
+                    <div class="price">$129<span> / គម្រោង</span></div>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Custom Design ពេញលេញ</li>
+                        <li><i class="fa-solid fa-check"></i> ជំនួយបច្ចេកទេសពេញម៉ោង</li>
+                        <li><i class="fa-solid fa-check"></i> Speed Optimization កម្រិតខ្ពស់</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-secondary" style="display: block; text-align: center; margin-top: 20px;">ជ្រើសរើស</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ទីតាំងទាញយក Footer ដោយស្វ័យប្រវត្តិ -->
+    <div id="footer-container"></div>
+
+    <script src="../script.js"></script>
+    <script>
+        // ទាញយក Header និង Footer មកដាក់ក្នុង More folder
+        fetch('header.html')
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+                document.getElementById('link-home').href = '../index.html';
+                document.getElementById('link-about').href = 'about.html';
+                document.getElementById('link-services').href = 'services.html';
+                document.getElementById('link-contact').href = 'contact.html';
+            });
+
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => { document.getElementById('footer-container').innerHTML = data; });
+    </script>
+</body>
+</html>

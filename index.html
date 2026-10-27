@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ទំព័រដើម - My Personal Space</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruuy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ index ការពារបញ្ហាអេក្រង់ស -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Kantumruuy Pro', sans-serif;
+        }
+
+        :root {
+            --primary-sky: #00d2ff;
+            --secondary-sky: #3a7bd5;
+            --bg-dark: #0a1118;
+            --text-color: #e6f1ff;
+            --accent-glow: rgba(0, 210, 255, 0.4);
+        }
+
+        body, body.dark-mode {
+            background-color: var(--bg-dark, #0a1118) !important;
+            color: var(--text-color, #e6f1ff) !important;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 8% 40px 8%;
+            flex-wrap: wrap;
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: var(--primary-sky);
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.15);
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .gradient-name {
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+            font-weight: 800;
+        }
+
+        .sub-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a8b2d1;
+            margin-bottom: 20px;
+        }
+
+        .hero-description {
+            color: #8892b0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-sky), var(--secondary-sky));
+            color: #fff;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--primary-sky);
+            color: var(--primary-sky);
+        }
+
+        .hero-socials {
+            display: flex;
+            gap: 15px;
+        }
+
+        .hero-socials a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            color: var(--primary-sky);
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .avatar-glow-ring {
+            padding: 6px;
+            background: linear-gradient(45deg, var(--primary-sky), var(--secondary-sky));
+            border-radius: 50%;
+            box-shadow: 0 0 35px var(--accent-glow);
+        }
+
+        .avatar-glow-ring img {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            border: 4px solid var(--bg-dark);
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <!-- Background Particle Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- ទីតាំង Fetch Header -->
+    <div id="header-container"></div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="welcome-badge">
+                <i class="fa-solid fa-sparkles"></i> <span>ស្វាគមន៍មកកាន់ពិភពឌីជីថលរបស់ខ្ញុំ</span>
+            </div>
+            
+            <h1 class="main-title">
+                សួស្តី! ខ្ញុំឈ្មោះ <span class="gradient-name">CHHENG</span>
+            </h1>
+            
+            <h2 class="sub-title">
+                <span class="typing-text">Web & Software Developer</span> 💻✨
+            </h2>
+            
+            <p class="hero-description">
+                ខ្ញុំជាអ្នកអភិវឌ្ឍន៍វេបសាយដែលមានចំណង់ចំណូលចិត្តខ្លាំងលើការបង្កើត UI/UX ស្អាតៗ មានចលនារស់រវើក និងបទពិសោធន៍ប្រើប្រាស់រលូន។
+            </p>
+            
+            <div class="btn-group">
+                <a href="More/projects.html" class="btn btn-primary glow-btn">
+                    <i class="fa-solid fa-code"></i> View My Work
+                </a>
+                <a href="More/contact.html" class="btn btn-secondary">
+                    <i class="fa-solid fa-paper-plane"></i> Contact Me
+                </a>
+            </div>
+
+            <!-- Social Media Icons -->
+            <div class="hero-socials">
+                <a href="https://github.com" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a href="https://t.me/CHHENG55" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+        </div>
+
+        <div class="hero-img floating">
+            <div class="avatar-glow-ring">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop" alt="CHHENG Profile">
+            </div>
+        </div>
+    </section>
+
+    <!-- ទីតាំង Fetch Footer -->
+    <div id="footer-container"></div>
+
+    <script src="script.js"></script>
+    <script>
+        fetch('More/header.html')
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+                if(document.getElementById('link-home')) document.getElementById('link-home').href = 'index.html';
+                if(document.getElementById('link-about')) document.getElementById('link-about').href = 'More/about.html';
+                if(document.getElementById('link-projects')) document.getElementById('link-projects').href = 'More/projects.html';
+                if(document.getElementById('link-cv')) document.getElementById('link-cv').href = 'More/cv-builder.html';
+                if(document.getElementById('link-blog')) document.getElementById('link-blog').href = 'More/blog.html';
+                if(document.getElementById('link-contact')) document.getElementById('link-contact').href = 'More/contact.html';
+                if(typeof initHeaderEvents === 'function') initHeaderEvents();
+            })
+            .catch(err => console.log('Header fetch error:', err));
+
+        fetch('More/footer.html')
+            .then(res => res.text())
+            .then(data => { document.getElementById('footer-container').innerHTML = data; })
+            .catch(err => console.log('Footer fetch error:', err));
+    </script>
+</body>
+</html>

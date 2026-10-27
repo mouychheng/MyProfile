@@ -1,0 +1,49 @@
+<style>
+    /* CSS សម្រាប់ Footer */
+    footer {
+        text-align: center;
+        padding: 25px 8%;
+        background: var(--card-bg, rgba(22, 33, 48, 0.85));
+        backdrop-filter: blur(10px);
+        color: var(--text-muted, #8892b0);
+        font-size: 0.9rem;
+        border-top: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
+        margin-top: 60px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-links a {
+        color: var(--primary-sky, #00d2ff);
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .social-links a:hover {
+        transform: scale(1.2);
+    }
+</style>
+
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2026 Personal Space | រក្សាសិទ្ធិគ្រប់យ៉ាង</p>
+        <div class="social-links">
+            <a href="https://t.me/" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://github.com/" target="_blank"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </div>
+</footer>

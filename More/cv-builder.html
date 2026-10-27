@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Builder - បង្កើតប្រវត្តិរូបអាជីព</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruuy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ CV Builder -->
+    <style>
+        .cv-builder-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 950px) {
+            .cv-builder-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cv-input-section {
+            background: var(--card-bg, rgba(255, 255, 255, 0.05));
+            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .cv-input-section h3 {
+            color: var(--primary-sky, #00d2ff);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: #a8b2d1;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
+            color: #fff;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-sky, #00d2ff);
+        }
+
+        .floating-cv {
+            animation: floatCV 5s ease-in-out infinite;
+        }
+
+        @keyframes floatCV {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
+        }
+
+        /* CV Sheet Layout */
+        .cv-sheet {
+            background: #ffffff;
+            color: #1a202c;
+            width: 100%;
+            min-height: 850px;
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 36% 64%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .cv-sidebar {
+            background: linear-gradient(180deg, #0f2b48 0%, #0a192f 100%);
+            color: #ffffff;
+            padding: 30px 20px;
+        }
+
+        .cv-avatar-box {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .avatar-glow {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-sky, #00d2ff);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+        }
+
+        .cv-block {
+            margin-bottom: 25px;
+        }
+
+        .cv-block h4 {
+            font-size: 0.88rem;
+            letter-spacing: 1px;
+            color: var(--primary-sky, #00d2ff);
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 4px;
+        }
+
+        .cv-block p, .cv-block span {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .cv-skills-tags span {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.15);
+            color: var(--primary-sky, #00d2ff);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            margin: 3px;
+        }
+
+        .cv-main {
+            padding: 35px 30px;
+            background: #ffffff;
+        }
+
+        .cv-header-title h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f2b48;
+        }
+
+        .p-job-title {
+            font-size: 0.95rem;
+            color: #0077b6;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .cv-section {
+            margin-bottom: 20px;
+        }
+
+        .cv-section h3 {
+            font-size: 0.92rem;
+            color: #0f2b48;
+            margin-bottom: 5px;
+        }
+
+        .cv-section hr {
+            border: none;
+            border-top: 2px solid #0f2b48;
+            margin-bottom: 10px;
+        }
+
+        .cv-section p, .cv-section li, .cv-section strong {
+            font-size: 0.85rem;
+            color: #334e68;
+            line-height: 1.5;
+        }
+
+        .exp-title-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #0f2b48;
+        }
+
+        .cv-section small {
+            color: #627d98;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .cv-section ul {
+            padding-left: 18px;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #cv-print-area, #cv-print-area * { visibility: visible; }
+            #cv-print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <canvas id="bg-canvas"></canvas>
+    <div id="header-container"></div>
+
+    <main class="page-container" style="max-width: 1250px; padding-top: 110px;">
+        <section class="section-title">
+            <h2>Professional CV <span>Builder</span></h2>
+            <p>បញ្ចូលព័ត៌មាន និងអាប់ឡូតរូបភាពដើម្បីបង្កើត CV បែបអាជីពដែលមានចលនាស្អាត និងអាច Download ជា PDF បាន</p>
+        </section>
+
+        <div class="cv-builder-wrapper">
+            <div class="cv-input-section">
+                <h3><i class="fa-solid fa-user-pen"></i> ១. ព័ត៌មានផ្ទាល់ខ្លួន (Personal Info)</h3>
+                
+                <div class="form-group">
+                    <label><i class="fa-solid fa-image"></i> អាប់ឡូតរូបភាពប្រូហ្វាល (Upload Profile Image)</label>
+                    <input type="file" id="in-image" accept="image/*" onchange="previewImage(event)" style="padding: 8px;">
+                </div>
+
+                <div class="form-group">
+                    <label>ឈ្មោះពេញ (Full Name)</label>
+                    <input type="text" id="in-fullname" placeholder="SOT MOUYCHHENG" oninput="updateCV()">
+                </div>
+                <div class="form-group">
+                    <label>មុខតំណែង (Job Title)</label>
+                    <input type="text" id="in-title" placeholder="Web Developer / Designer" oninput="updateCV()">
+                </div>
+                <div class="form-group">
+                    <label>លេខទូរស័ព្ទ</label>
+                    <input type="text" id="in-phone" placeholder="0718589592" oninput="updateCV()">
+                </div>
+                <div class="form-group">
+                    <label>អ៊ីមែល</label>
+                    <input type="email" id="in-email" placeholder="mouychheng5555@gmail.com" oninput="updateCV()">
+                </div>
+                <div class="form-group">
+                    <label>អាសយដ្ឋាន / ទីតាំង</label>
+                    <input type="text" id="in-address" placeholder="រាជធានីភ្នំពេញ, កម្ពុជា" oninput="updateCV()">
+                </div>
+
+                <h3 style="margin-top: 25px;"><i class="fa-solid fa-graduation-cap"></i> ២. ការសិក្សា & គោលដៅ (Details)</h3>
+                <div class="form-group">
+                    <label>ប្រវត្តិរូប និងការសិក្សា (Education)</label>
+                    <textarea id="in-education" rows="2" placeholder="បរិញ្ញាបត្រវិទ្យាសាស្ត្រកុំព្យូទ័រ..." oninput="updateCV()"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>គោលដៅការងារ (Career Goal)</label>
+                    <textarea id="in-goal" rows="2" placeholder="គោលដៅប្រកបដោយមហិច្ឆតា..." oninput="updateCV()"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>ចំណង់ចំណូលចិត្ត (Hobbies)</label>
+                    <input type="text" id="in-hobbies" placeholder="ស្រាវជ្រាវកូដ, អានសៀវភៅ, រចនា UI/UX" oninput="updateCV()">
+                </div>
+                <div class="form-group">
+                    <label>Skills ដែលកំពុងរៀន (Current Skills)</label>
+                    <input type="text" id="in-skills" placeholder="HTML5, CSS Animation, JavaScript, GitHub" oninput="updateCV()">
+                </div>
+
+                <button onclick="window.print()" class="btn btn-primary pulse-btn" style="width: 100%; margin-top: 20px; padding: 14px;">
+                    <i class="fa-solid fa-file-pdf"></i> Download / Print CV as PDF
+                </button>
+            </div>
+
+            <div class="cv-preview-section">
+                <div class="cv-sheet floating-cv" id="cv-print-area">
+                    <div class="cv-sidebar">
+                        <div class="cv-avatar-box">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop" alt="Profile Picture" class="avatar-glow" id="cv-profile-img">
+                        </div>
+
+                        <div class="cv-block">
+                            <h4><i class="fa-solid fa-address-book"></i> CONTACT</h4>
+                            <p><i class="fa-solid fa-phone"></i> <span id="p-phone">0718589592</span></p>
+                            <p><i class="fa-solid fa-envelope"></i> <span id="p-email">mouychheng5555@gmail.com</span></p>
+                            <p><i class="fa-solid fa-location-dot"></i> <span id="p-address">រាជធានីភ្នំពេញ, កម្ពុជា</span></p>
+                        </div>
+
+                        <div class="cv-block">
+                            <h4><i class="fa-solid fa-heart"></i> HOBBIES</h4>
+                            <p id="p-hobbies">ស្រាវជ្រាវកូដថ្មីៗ, អានសៀវភៅបច្ចេកវិទ្យា, រចនា UI/UX</p>
+                        </div>
+
+                        <div class="cv-block">
+                            <h4><i class="fa-solid fa-code"></i> SKILLS LEARNING</h4>
+                            <div class="cv-skills-tags" id="p-skills">
+                                <span>HTML5 / CSS3</span>
+                                <span>JavaScript ES6</span>
+                                <span>CSS Animation</span>
+                                <span>Git & GitHub</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cv-main">
+                        <div class="cv-header-title">
+                            <h1 id="p-fullname">SOT MOUYCHHENG</h1>
+                            <p class="p-job-title" id="p-title">Web Developer</p>
+                        </div>
+
+                        <div class="cv-section">
+                            <h3><i class="fa-solid fa-bullseye"></i> គោលដៅការងារ (CAREER GOAL)</h3>
+                            <hr>
+                            <p id="p-goal">ប្រាថ្នាចង់ក្លាយជា Full-Stack Web Developer ដែលមានសមត្ថភាពបង្កើតគេហទំព័រទំនើប ល្បឿនលឿន និងមានប្រយោជន៍ដល់សង្គម rhetoric。</p>
+                        </div>
+
+                        <div class="cv-section">
+                            <h3><i class="fa-solid fa-graduation-cap"></i> ការសិក្សា (EDUCATION)</h3>
+                            <hr>
+                            <div class="exp-item">
+                                <strong id="p-education">និស្សិតបរិញ្ញាបត្រវិទ្យាសាស្ត្រកុំព្យូទ័រ (Computer Science)</strong>
+                                <small>ឆ្នាំ ២០២២ - បច្ចុប្បន្ន</small>
+                            </div>
+                        </div>
+
+                        <div class="cv-section">
+                            <h3><i class="fa-solid fa-briefcase"></i> បទពិសោធន៍ & ស្នាដៃ (EXPERIENCE & PROJECTS)</h3>
+                            <hr>
+                            <div class="exp-item">
+                                <div class="exp-title-row">
+                                    <strong>Personal Portfolio & CV Builder Web</strong>
+                                    <span>២០២៦</span>
+                                </div>
+                                <small>HTML, CSS Animation, JavaScript</small>
+                                <ul>
+                                    <li>រចនាគេហទំព័រប្រូហ្វាលផ្ទាល់ខ្លួនមានពណ៌ផ្ទៃមេឃ និងចលនារស់រវើក។</li>
+                                    <li>បង្កើតប្រព័ន្ធ CV Builder ដែលអាចបញ្ចូលទិន្នន័យបានភ្លាមៗ និង Download ជា PDF។</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+    <script src="../script.js"></script>
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('cv-profile-img');
+                if (output) output.src = reader.result;
+            };
+            if (event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function updateCV() {
+            document.getElementById('p-fullname').innerText = document.getElementById('in-fullname').value || 'SOT MOUYCHHENG';
+            document.getElementById('p-title').innerText = document.getElementById('in-title').value || 'Web Developer';
+            document.getElementById('p-phone').innerText = document.getElementById('in-phone').value || '0718589592';
+            document.getElementById('p-email').innerText = document.getElementById('in-email').value || 'mouychheng5555@gmail.com';
+            document.getElementById('p-address').innerText = document.getElementById('in-address').value || 'រាជធានីភ្នំពេញ, កម្ពុជា';
+            document.getElementById('p-education').innerText = document.getElementById('in-education').value || 'និស្សិតបរិញ្ញាបត្រវិទ្យាសាស្ត្រកុំព្យូទ័រ (Computer Science)';
+            document.getElementById('p-goal').innerText = document.getElementById('in-goal').value || 'ប្រាថ្នាចង់ក្លាយជា Full-Stack Web Developer...';
+            document.getElementById('p-hobbies').innerText = document.getElementById('in-hobbies').value || 'ស្រាវជ្រាវកូដថ្មីៗ, អានសៀវភៅបច្ចេកវិទ្យា';
+            
+            let skillsInput = document.getElementById('in-skills').value;
+            if (skillsInput) {
+                let skillsArr = skillsInput.split(',');
+                let tagsHTML = '';
+                skillsArr.forEach(s => {
+                    if (s.trim() !== '') tagsHTML += `<span>${s.trim()}</span>`;
+                });
+                document.getElementById('p-skills').innerHTML = tagsHTML;
+            } else {
+                document.getElementById('p-skills').innerHTML = `<span>HTML5 / CSS3</span><span>JavaScript ES6</span><span>CSS Animation</span><span>Git & GitHub</span>`;
+            }
+        }
+
+        fetch('header.html').then(res => res.text()).then(d => { document.getElementById('header-container').innerHTML = d; setupNavLinks(); initHeaderEvents(); });
+        fetch('footer.html').then(res => res.text()).then(d => document.getElementById('footer-container').innerHTML = d);
+    </script>
+</body>
+</html>

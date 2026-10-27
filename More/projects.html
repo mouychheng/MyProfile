@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ស្នាដៃ - My Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruuy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ Projects -->
+    <style>
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .project-card {
+            background: var(--card-bg, rgba(255, 255, 255, 0.05));
+            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-sky, #00d2ff);
+            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.25);
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-info h3 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 1.15rem;
+        }
+
+        .project-info p {
+            color: #a8b2d1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .tech-tags span {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.15);
+            color: var(--primary-sky, #00d2ff);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            border-radius: 12px;
+            margin: 3px;
+        }
+
+        .qr-box {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .qr-box img {
+            width: 85px;
+            height: 85px;
+            border-radius: 8px;
+            background: #fff;
+            padding: 4px;
+        }
+
+        .qr-box small {
+            display: block;
+            margin-top: 6px;
+            color: #8892b0;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <canvas id="bg-canvas"></canvas>
+    <div id="header-container"></div>
+
+    <main class="page-container" style="padding-top: 110px;">
+        <section class="section-title">
+            <h2>ស្នាដៃ <span>និង Project</span> (My Projects)</h2>
+            <p>គម្រោងវេបសាយដែលខ្ញុំបានអភិវឌ្ឍន៍កន្លងមក</p>
+        </section>
+
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&auto=format&fit=crop" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>Personal Portfolio Website</h3>
+                    <p>វេបសាយប្រូហ្វាលផ្ទាល់ខ្លួនដែលមាន Dark/Light mode និង CSS Animation។</p>
+                    <div class="tech-tags">
+                        <span>HTML5</span>
+                        <span>CSS3</span>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="qr-box">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com" alt="QR Code">
+                        <small>ស្កេនមើល Demo</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&auto=format&fit=crop" alt="Project 2">
+                </div>
+                <div class="project-info">
+                    <h3>E-Commerce Web App</h3>
+                    <p>ប្រព័ន្ធហាងទំនិញអនឡាញ ដែលអាចជ្រើសរើសទំនិញ និងគណនាតម្លៃ។</p>
+                    <div class="tech-tags">
+                        <span>JavaScript</span>
+                        <span>CSS Grid</span>
+                        <span>API</span>
+                    </div>
+                    <div class="qr-box">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com" alt="QR Code">
+                        <small>ស្កេនមើល Demo</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+    <script src="../script.js"></script>
+    <script>
+        fetch('header.html').then(res => res.text()).then(data => {
+            document.getElementById('header-container').innerHTML = data;
+            setupNavLinks();
+            initHeaderEvents();
+        });
+        fetch('footer.html').then(res => res.text()).then(d => document.getElementById('footer-container').innerHTML = d);
+    </script>
+</body>
+</html>
