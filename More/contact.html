@@ -130,15 +130,20 @@
     <div id="footer-container"></div>
     <script src="../script.js"></script>
     <script>
-        function handleContactSubmit(e) {
-            e.preventDefault();
-            let toast = document.getElementById('toast-msg');
-            toast.classList.add('show');
-            document.getElementById('contactForm').reset();
-            setTimeout(() => { toast.classList.remove('show'); }, 4000);
-        }
-        fetch('header.html').then(res => res.text()).then(d => { document.getElementById('header-container').innerHTML = d; setupNavLinks(); initHeaderEvents(); });
-        fetch('footer.html').then(res => res.text()).then(d => document.getElementById('footer-container').innerHTML = d);
+        // ទាញយក Header មកដាក់រួចហៅ Function ស្វ័យប្រវត្តិ
+        fetch('header.html') // បើនៅ index.html ដាក់ 'More/header.html'
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+                setupNavLinks();
+                initHeaderEvents();
+            });
+
+        fetch('footer.html') // បើនៅ index.html ដាក់ 'More/footer.html'
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
     </script>
 </body>
 </html>

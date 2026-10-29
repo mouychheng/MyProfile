@@ -4,172 +4,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>អំពីខ្ញុំ - About Me</title>
+    <title>អំពីខ្ញុំ (About Me) - CHHENG.dev</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Kantumruuy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
 
-    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ About -->
+    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ About Me -->
     <style>
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Kantumruuy Pro', sans-serif;
         }
 
-        .info-card {
-            background: var(--card-bg, rgba(255, 255, 255, 0.05));
-            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+        :root {
+            --primary-sky: #00d2ff;
+            --secondary-sky: #3a7bd5;
+            --bg-dark: #0a1118;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --text-color: #e6f1ff;
+            --text-muted: #8892b0;
+            --border-color: rgba(0, 210, 255, 0.25);
+            --accent-glow: rgba(0, 210, 255, 0.4);
         }
 
-        .info-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-sky, #00d2ff);
-            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.2);
-        }
-
-        .info-card h3 {
-            color: var(--primary-sky, #00d2ff);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .timeline {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .timeline li {
+        body, body.dark-mode {
+            background-color: var(--bg-dark, #0a1118) !important;
+            color: var(--text-color, #e6f1ff) !important;
+            min-height: 100vh;
+            overflow-x: hidden;
             position: relative;
-            padding-left: 20px;
-            margin-bottom: 15px;
-            color: var(--text-color, #e6f1ff);
-            font-size: 0.95rem;
         }
 
-        .timeline li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 8px;
-            width: 8px;
-            height: 8px;
-            background: var(--primary-sky, #00d2ff);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary-sky, #00d2ff);
+        .about-container {
+            max-width: 1100px;
+            margin: 170px auto 80px auto;
+            padding: 0 5%;
         }
 
-        .skills-section {
-            background: var(--card-bg, rgba(255, 255, 255, 0.05));
-            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
-        .skills-section h3 {
-            color: var(--primary-sky, #00d2ff);
+        .section-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .section-header h1 span {
+            background: linear-gradient(135deg, #00d2ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Card Styling */
+        .about-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 210, 255, 0.15);
+        }
+
+        .about-card h2 {
+            color: var(--primary-sky);
+            font-size: 1.4rem;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+            padding-bottom: 12px;
+        }
+
+        /* 01. Personal Introduction */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .intro-img-box {
+            text-align: center;
+        }
+
+        .intro-profile-img {
+            width: 240px;
+            height: auto;
+            border-radius: 16px;
+            object-fit: cover;
+            border: 2px solid var(--primary-sky);
+            filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.4));
+        }
+
+        .intro-details h3 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .intro-details .nickname {
+            color: var(--primary-sky);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .intro-details p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        /* 02. My Story */
+        .story-content p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.02rem;
+        }
+
+        /* 03. My Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
 
         .skill-item {
-            margin-bottom: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            padding: 20px;
+            border-radius: 14px;
+            transition: 0.3s;
         }
 
-        .skill-item span {
-            display: block;
-            margin-bottom: 6px;
+        .skill-item:hover {
+            border-color: var(--primary-sky);
+            background: rgba(0, 210, 255, 0.05);
+        }
+
+        .skill-item h4 {
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-item h4 i {
+            color: var(--primary-sky);
+        }
+
+        .skill-item p {
+            color: var(--text-muted);
             font-size: 0.9rem;
-            color: var(--text-color, #e6f1ff);
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
+        /* 04. Education Timeline */
+        .edu-item {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 3px solid var(--primary-sky);
         }
 
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-sky, #00d2ff), var(--secondary-sky, #3a7bd5));
-            border-radius: 10px;
-            transition: width 1s ease-in-out;
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+        .edu-item h4 {
+            color: #fff;
+            font-size: 1.15rem;
+            margin-bottom: 5px;
+        }
+
+        .edu-item span {
+            color: var(--primary-sky);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .edu-item p {
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-size: 0.95rem;
+        }
+
+        /* 05. Dreams & Goals */
+        .goals-list {
+            list-style: none;
+        }
+
+        .goals-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .goals-list li i {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            color: var(--primary-sky);
+        }
+
+        @media (max-width: 850px) {
+            .intro-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .intro-img-box {
+                margin-bottom: 20px;
+            }
+            .intro-details {
+                text-align: center;
+            }
         }
     </style>
 </head>
 
 <body class="dark-mode">
-    <canvas id="bg-canvas"></canvas>
+
+    <!-- Header Container -->
     <div id="header-container"></div>
 
-    <main class="page-container" style="padding-top: 110px;">
-        <section class="section-title">
-            <h2>អំពី<span>ខ្ញុំ</span> (About Me)</h2>
-            <p>ប្រវត្តិរូប ការសិក្សា ចំណង់ចំណូលចិត្ត និងគោលដៅអនាគត</p>
-        </section>
+    <div class="about-container">
+        <!-- Section Header -->
+        <div class="section-header">
+            <h1>ស្វែងយល់ពី <span>ខ្ញុំផ្ទាល់</span></h1>
+            <p>ប្រវត្តិរូប​ និង ចំណង់ចំណូលចិត្តក្នុងពិភពបច្ចេកវិទ្យា</p>
+        </div>
 
-        <div class="about-grid">
-            <div class="info-card">
-                <h3><i class="fa-solid fa-graduation-cap"></i> ប្រវត្តិរូប និងការសិក្សា</h3>
-                <ul class="timeline">
-                    <li><strong>ឆ្នាំ ២០២២ - បច្ចុប្បន្ន:</strong> រៀនថ្នាក់បរិញ្ញាបត្រវិទ្យាសាស្ត្រកុំព្យូទ័រ (Computer Science)</li>
-                    <li><strong>ឆ្នាំ ២០២១:</strong> សិក្សាវគ្គខ្លី Web Development, HTML/CSS/JS & Web Design</li>
-                </ul>
-            </div>
-
-            <div class="info-card">
-                <h3><i class="fa-solid fa-bullseye"></i> គោលដៅការងារ & ចំណង់ចំណូលចិត្ត</h3>
-                <p style="margin-bottom: 10px;"><strong>គោលដៅ៖</strong> ចង់ក្លាយជា Full-Stack Web Developer ដែលមានសមត្ថភាពបង្កើតស្ថាបត្យកម្ម App កម្រិតខ្ពស់។</p>
-                <p><strong>ចំណង់ចំណូលចិត្ត៖</strong> ស្រាវជ្រាវកូដថ្មីៗ, អានសៀវភៅបច្ចេកវិទ្យា, និងរចនា UI/UX។</p>
+        <!-- 01. Personal Introduction -->
+        <div class="about-card">
+            <h2><i class="fa-solid fa-user-astronaut"></i> 01. Personal Introduction 👋</h2>
+            <div class="intro-grid">
+                <div class="intro-img-box">
+                    <img src="../img/img1.png" alt="Sot Mouychheng" class="intro-profile-img">
+                </div>
+                <div class="intro-details">
+                    <h3>ស៊ត មួយឆេង (Sot Mouychheng)</h3>
+                    <div class="nickname">ហៅក្រៅ៖ Ah Ching ( ដាក់ខ្លួនឋង 😆​ )</div>
+                    <p>✨ <strong>អ្នកជានរណា និងកំពុងធ្វើអ្វី៖</strong> ខ្ញុំជាសិស្សនិស្សិតឆ្នាំទី៤ ជំនាញវិទ្យាសាស្ត្រកុំព្យូទ័រ និងវិស្វកម្មសូហ្វវែរ (IT & Software Engineering) នៅសាកលវិទ្យាល័យឌីជីថលកម្ពុជា។ ខ្ញុំមានចំណង់ចំណូលចិត្តខ្លាំងលើការអភិវឌ្ឍន៍ UI/UX Design, Frontend Development និងការគ្រប់គ្រងប្រព័ន្ធទិន្នន័យ។</p>
+                    <p>👋 <strong>ប្រយោគស្វាគមន៍៖</strong> "ยินดีต้อนรับ - សូមស្វាគមន៍យ៉ាងកក់ក្តៅមកកាន់ទីកន្លែងឌីជីថលផ្ទាល់ខ្លួនរបស់ខ្ញុំ ដែលគ្រប់បន្ទាត់កូដត្រូវបានបង្កើតឡើងដោយក្តីស្រលាញ់ និងភាពម៉ត់ចត់!"</p>
+                </div>
             </div>
         </div>
 
-        <section class="skills-section">
-            <h3><i class="fa-solid fa-code"></i> ជំនាញដែលកំពុងរៀន (Skills Learning)</h3>
-            <div class="skills-bar">
+        <!-- 02. My Story -->
+        <div class="about-card">
+            <h2><i class="fa-solid fa-book-open"></i> 02. My Story 📖</h2>
+            <div class="story-content">
+                <p>ដំណើររបស់ខ្ញុំចូលក្នុងពិភព Coding បានចាប់ផ្ដើមចេញពីចំណង់ចំណូលចិត្តផ្ទាល់ខ្លួនក្នុងការចង់ដឹងចង់ឃើញពីរបៀបដែលវេបសាយដ៏ស្រស់ស្អាតត្រូវបានបង្កើតឡើង។ ដំបូងឡើយ វាជារឿងពិបាកក្នុងការស្វែងយល់ពីកូដ និងរចនាសម្ព័ន្ធបណ្តាញខ្សែកាប (Network & Database) ប៉ុន្តែតាមរយៈការអត់ធ្មត់ ការអនុវត្តជាក់ស្តែង និងការទម្លុះទម្លាយបញ្ហា (Troubleshooting) ជាប្រចាំ បានធ្វើឱ្យខ្ញុំកាន់តែមានទំនុកចិត្ត។</p>
+                <p>បទពិសោធន៍ក្នុងការធ្វើፕሮጀែក្សរួមគ្នាជាមួយក្រុមមិត្តភក្តិនៅសាលា និងការគ្រប់គ្រងអាជីវកម្មអនឡាញផ្ទាល់ខ្លួន (Ching Skincare) បានបង្រៀនខ្ញុំឱ្យច្បាស់ពីរបៀបនៃការសម្របសម្រួលការងារ ការដោះស្រាយបញ្ហាស្មុគស្មាញ និងការផ្តោតលើបទពិសោធន៍អ្នកប្រើប្រាស់ (User Experience) ជាចម្បង។ สิ่งเหล่านี้ហើយដែលជាកម្លាំងចិត្តជំរុញឱ្យខ្ញុំបន្តរៀនបច្ចេកវិទ្យាថ្មីៗជារៀងរាល់ថ្ងៃ។</p>
+            </div>
+        </div>
+
+        <!-- 03. My Skills -->
+        <div class="about-card">
+            <h2><i class="fa-solid fa-laptop-code"></i> 03. My Skills 💻</h2>
+            <div class="skills-grid">
                 <div class="skill-item">
-                    <span>HTML5 & CSS3</span>
-                    <div class="progress-bar"><div class="progress" style="width: 90%;"></div></div>
+                    <h4><i class="fa-solid fa-code"></i> Frontend Dev</h4>
+                    <p>HTML5, CSS3, JavaScript, React, Tailwind CSS & Responsive Layouts</p>
                 </div>
                 <div class="skill-item">
-                    <span>JavaScript (ES6+)</span>
-                    <div class="progress-bar"><div class="progress" style="width: 75%;"></div></div>
+                    <h4><i class="fa-solid fa-server"></i> Backend & DB</h4>
+                    <p>PHP, Node.js, Express, MySQL, PostgreSQL & Supabase Database</p>
                 </div>
                 <div class="skill-item">
-                    <span>React / Vue.js</span>
-                    <div class="progress-bar"><div class="progress" style="width: 50%;"></div></div>
+                    <h4><i class="fa-solid fa-palette"></i> UI/UX Design</h4>
+                    <p>Figma, Mobile & Web Interfaces, Pastel & Sky Blue Aesthetics</p>
                 </div>
                 <div class="skill-item">
-                    <span>Git & GitHub Hosting</span>
-                    <div class="progress-bar"><div class="progress" style="width: 85%;"></div></div>
+                    <h4><i class="fa-solid fa-people-group"></i> Soft Skills</h4>
+                    <p>Communication, Teamwork, Problem Solving & Project Management</p>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
 
+        <!-- 04. Education -->
+        <div class="about-card">
+            <h2><i class="fa-solid fa-graduation-cap"></i> 04. Education 🎓</h2>
+            <div class="edu-item">
+                <h4>បរិញ្ញាបត្រវិទ្យាសាស្ត្រកុំព្យូទ័រ និងវិស្វកម្មសូហ្វវែរ (Bachelor of Science in IT & Software Engineering)</h4>
+                <span>សាកលវិទ្យាល័យឌីជីថលកម្ពុជា (Digital University of Cambodia) | ឆ្នាំទី៤ (2023 - បច្ចុប្បន្ន)</span>
+                <p>ផ្តោតលើការសិក្សាផ្នែក Software Architecture, Database Management, Web/Mobile App Development និង UI/UX Design។</p>
+            </div>
+            <div class="edu-item" style="margin-top: 25px;">
+                <h4>វិញ្ញាបនបត្រ និងសមិទ្ធផលសិក្សា</h4>
+                <span>Docker & Virtualization Inspection Training</span>
+                <p>បញ្ចប់ការអនុវត្តប្រព័ន្ធកុងតឺន័រ Docker, Linux Debian Administration និងការសាងសង់ប្រព័ន្ធវិបសាយស្វ័យប្រវត្តិ។</p>
+            </div>
+        </div>
+
+        <!-- 05. My Dreams & Goals -->
+        <div class="about-card">
+            <h2><i class="fa-solid fa-cloud-arrow-up"></i> 05. My Dreams & Goals ☁️</h2>
+            <ul class="goals-list">
+                <li><i class="fa-solid fa-circle-check"></i> <strong>គោលដៅរយៈពេលខ្លី៖</strong> បញ្ចប់ការសិក្សាថ្នាក់បរិញ្ញាបត្រដោយលទ្ធផលល្អប្រសើរ និងបញ្ចប់ការអភិវឌ្ឍន៍ Portfolio Website ក៏ដូចជា Project ផ្ទាល់ខ្លួនឱ្យបានសម្រេចជោគជ័យ ១០០%។</li>
+                <li><i class="fa-solid fa-circle-check"></i> <strong>គោលដៅរយៈពេលវែង៖</strong> ក្លាយជា Full-Stack Web Developer និង UI/UX Designer ជំនាញអាជីព ដែលអាចបង្កើតផលិតផលឌីជីថលជួយដោះស្រាយបញ្ហាក្នុងសង្គមពិតៗ។</li>
+                <li><i class="fa-solid fa-circle-check"></i> <strong>ការអភិវឌ្ឍខ្លួនឥតឈប់ឈរ៖</strong> បន្តរៀនសូត្របច្ចេកវិទ្យាថ្មីៗទំនើបបន្ថែមទៀត ពង្រីកអាជីវកម្មអនឡាញ Ching Skincare និងបង្កើតកេរ្តិ៍ឈ្មោះក្នុងវិស័យបច្ចេកវិទ្យាឌីជីថលនៅកម្ពុជា។</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer Container -->
     <div id="footer-container"></div>
+
     <script src="../script.js"></script>
     <script>
+        // Fetch Header & Footer មកដាក់ដោយស្វ័យប្រវត្តិ
         fetch('header.html')
             .then(res => res.text())
             .then(data => {
                 document.getElementById('header-container').innerHTML = data;
-                setupNavLinks();
-                initHeaderEvents();
+                if(typeof setupNavLinks === 'function') setupNavLinks();
+                if(typeof initHeaderEvents === 'function') initHeaderEvents();
             });
 
         fetch('footer.html')
@@ -179,4 +349,5 @@
             });
     </script>
 </body>
+
 </html>

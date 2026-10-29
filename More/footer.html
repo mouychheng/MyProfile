@@ -1,49 +1,214 @@
 <style>
-    /* CSS សម្រាប់ Footer */
-    footer {
-        text-align: center;
-        padding: 25px 8%;
-        background: var(--card-bg, rgba(22, 33, 48, 0.85));
-        backdrop-filter: blur(10px);
-        color: var(--text-muted, #8892b0);
-        font-size: 0.9rem;
-        border-top: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-        margin-top: 60px;
+    /* ==========================================
+       MODERN FOOTER STYLING
+       ========================================== */
+    .site-footer {
+        background: var(--card-bg, rgba(15, 23, 42, 0.95));
+        backdrop-filter: blur(15px);
+        color: var(--text-color, #e6f1ff);
+        padding: 60px 8% 25px 8%;
+        border-top: 1px solid var(--border-color, rgba(0, 210, 255, 0.25));
+        margin-top: 80px;
         position: relative;
         z-index: 1;
     }
 
-    .footer-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 15px;
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
     }
 
-    .social-links {
+    /* 1. Personal Brand */
+    .footer-brand .footer-logo {
         display: flex;
-        gap: 15px;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        margin-bottom: 15px;
     }
-    
-    .social-links a {
+
+    .footer-logo span {
         color: var(--primary-sky, #00d2ff);
-        font-size: 1.2rem;
+    }
+
+    .footer-logo-img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--primary-sky, #00d2ff);
+        box-shadow: 0 0 10px var(--accent-glow, rgba(0, 210, 255, 0.5));
+    }
+
+    .footer-brand p {
+        color: var(--text-muted, #8892b0);
+        font-size: 0.92rem;
+        line-height: 1.6;
+    }
+
+    /* 2. Quick Links */
+    .footer-links h3, .footer-social h3, .footer-signature h3 {
+        color: var(--primary-sky, #00d2ff);
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .footer-links ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-links ul li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links ul li a {
+        color: var(--text-muted, #a8b2d1);
+        text-decoration: none;
+        font-size: 0.92rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .footer-links ul li a:hover {
+        color: var(--primary-sky, #00d2ff);
+        transform: translateX(5px);
+    }
+
+    /* 3. Social Media */
+    .social-icons-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .social-icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(0, 210, 255, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-sky, #00d2ff);
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon-btn:hover {
+        background: var(--primary-sky, #00d2ff);
+        color: #fff;
+        transform: translateY(-4px);
+        box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+    }
+
+    /* 4. My Digital Signature (គ្មានស៊ុម និងតម្រឹមទីតាំងតាមតម្រូវការ) */
+    .footer-signature {
+        position: relative;
+    }
+
+    .signature-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5px 0;
+    }
+
+    /* រូបហត្ថលេខារំកិលទៅស្តាំ ចាប់ពីពាក់កណ្តាលចំណងជើង */
+    .chheng-signature-img {
+        width: 190px;
+        height: auto;
+        margin-left: 45%;
+        filter: brightness(0) saturate(100%) invert(67%) sepia(85%) saturate(2450%) hue-rotate(155deg) brightness(102%) contrast(101%) drop-shadow(0 0 8px rgba(0, 210, 255, 0.8));
         transition: transform 0.3s ease;
     }
 
-    .social-links a:hover {
-        transform: scale(1.2);
+    .chheng-signature-img:hover {
+        transform: scale(1.05);
+    }
+
+    /* ឈ្មោះរំកិលទៅស្តាំ ចាប់ពីពាក់កណ្តាលរូបសញ្ញេ */
+    .signature-name {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, #00d2ff, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-top: 6px;
+        margin-left: 68%;
+        white-space: nowrap;
+    }
+
+    /* Bottom Copyright */
+    .footer-bottom {
+        text-align: center;
+        padding-top: 25px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--text-muted, #8892b0);
+        font-size: 0.88rem;
     }
 </style>
 
-<footer>
-    <div class="footer-content">
-        <p>&copy; 2026 Personal Space | រក្សាសិទ្ធិគ្រប់យ៉ាង</p>
-        <div class="social-links">
-            <a href="https://t.me/" target="_blank"><i class="fa-brands fa-telegram"></i></a>
-            <a href="https://facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://github.com/" target="_blank"><i class="fa-brands fa-github"></i></a>
+<footer class="site-footer">
+    <div class="footer-grid">
+        <!-- ១. Personal Brand -->
+        <div class="footer-brand">
+            <a href="#" class="footer-logo">
+                <img src="/img/Logo.jpg" alt="Logo" class="footer-logo-img">
+                <div>CHHENG<span>.dev</span></div>
+            </a>
+            <p>បង្កើតឡើងដោយក្តីស្រលាញ់ និងភាពម៉ត់ចត់ ផ្តោតលើការអភិវឌ្ឍន៍ UI/UX និងវេបសាយទំនើបៗមានល្បឿនលឿន។</p>
         </div>
+
+        <!-- ២. Quick Links -->
+        <div class="footer-links">
+            <h3>តំណរហ័ស (Quick Links)</h3>
+            <ul>
+                <li><a href="../index.html">ទំព័រដើម (Home)</a></li>
+                <li><a href="about.html">អំពីខ្ញុំ (About)</a></li>
+                <li><a href="projects.html">ស្នាដៃ (Projects)</a></li>
+                <li><a href="about.html">ជំនាញ (Skills)</a></li>
+                <li><a href="cv-builder.html">ប្រវត្តិរូប (My CV)</a></li>
+                <li><a href="contact.html">ទំនាក់ទំនង (Contact)</a></li>
+            </ul>
+        </div>
+
+        <!-- ៣. Social Media -->
+        <div class="footer-social">
+            <h3>បណ្តាញសង្គម (Social Media)</h3>
+            <div class="social-icons-grid">
+                <a href="https://github.com" target="_blank" class="social-icon-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://facebook.com" target="_blank" class="social-icon-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://tiktok.com" target="_blank" class="social-icon-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://youtube.com" target="_blank" class="social-icon-btn" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://instagram.com" target="_blank" class="social-icon-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://t.me/CHHENG55" target="_blank" class="social-icon-btn" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="social-icon-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <!-- ៤. My Digital Signature ✍️ -->
+        <div class="footer-signature">
+            <h3>ហត្ថលេខាឌីជីថល (Digital Signature)</h3>
+            <div class="signature-box">
+                <img src="/img/image.png" alt="Sot Mouychheng Signature" class="chheng-signature-img">
+                <div class="signature-name">✍️ SOT MOUYCHHENG</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+        <p>&copy; 2026 CHHENG | រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ <strong>ស៊ត មួយឆេង</strong></p>
     </div>
 </footer>

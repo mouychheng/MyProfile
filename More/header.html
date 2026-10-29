@@ -1,64 +1,155 @@
 <style>
-    /* CSS សម្រាប់ Header & Navbar */
+    /* ==========================================
+       MODERN HEADER & NAVBAR STYLING (ធំទូលាយ និងច្បាស់)
+       ========================================== */
     .navbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 18px 8%;
-        background: var(--card-bg, rgba(22, 33, 48, 0.85));
-        backdrop-filter: blur(12px);
+        padding: 20px 6%;
+        background: var(--card-bg, rgba(22, 33, 48, 0.92));
+        backdrop-filter: blur(15px);
         position: fixed;
         width: 100%;
         top: 0;
         z-index: 1000;
-        border-bottom: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        border-bottom: 1px solid var(--border-color, rgba(0, 210, 255, 0.25));
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
     }
 
-    .logo {
+    /* 1. Logo & Brand ធំល្មមស្អាត */
+    .logo-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .logo-brand:hover {
+        transform: scale(1.03);
+    }
+
+    .logo-icon {
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, var(--primary-sky, #00d2ff), var(--secondary-sky, #3a7bd5));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.25rem;
+        box-shadow: 0 0 15px var(--accent-glow, rgba(0, 210, 255, 0.6));
+    }
+
+    .logo-text {
         font-size: 1.6rem;
         font-weight: 700;
         color: var(--text-color, #e6f1ff);
+        letter-spacing: 0.5px;
     }
 
-    .logo span {
+    .logo-text span {
         color: var(--primary-sky, #00d2ff);
     }
 
+    /* Navigation Links ធំទូលាយ និងអក្សរច្បាស់ */
     .nav-links {
         display: flex;
         list-style: none;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
+    }
+
+    .nav-links li {
+        position: relative;
     }
 
     .nav-links li a {
         color: var(--text-color, #e6f1ff);
         text-decoration: none;
-        font-size: 0.95rem;
+        font-size: 1.02rem;
         font-weight: 500;
-        padding: 6px 12px;
-        border-radius: 8px;
+        padding: 9px 16px;
+        border-radius: 10px;
         transition: 0.3s;
+        display: inline-block;
     }
 
     .nav-links li a:hover {
         color: var(--primary-sky, #00d2ff);
-        background: rgba(0, 210, 255, 0.08);
+        background: rgba(0, 210, 255, 0.1);
+    }
+
+    /* Active Glow Line */
+    .nav-links li a.active-page {
+        color: var(--primary-sky, #00d2ff) !important;
+        font-weight: 600;
+    }
+
+    .nav-links li a.active-page::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 14px;
+        right: 14px;
+        height: 3px;
+        background: var(--primary-sky, #00d2ff);
+        border-radius: 2px;
+        box-shadow: 0 0 12px var(--primary-sky, #00d2ff);
     }
 
     .btn-nav {
         border: 2px solid var(--primary-sky, #00d2ff) !important;
         color: var(--primary-sky, #00d2ff) !important;
-        border-radius: 20px !important;
+        border-radius: 25px !important;
+        padding: 8px 20px !important;
     }
+
+    .btn-nav.active-page::after { display: none; }
 
     .btn-nav:hover {
         background: var(--primary-sky, #00d2ff) !important;
         color: #fff !important;
-        box-shadow: 0 0 15px var(--accent-glow, rgba(0, 210, 255, 0.4));
+        box-shadow: 0 0 18px var(--accent-glow, rgba(0, 210, 255, 0.5));
     }
 
+    /* 2. Smart Search Bar ធំទូលាយ */
+    .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .search-input {
+        width: 170px;
+        padding: 8px 14px 8px 36px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border-color, rgba(0, 210, 255, 0.3));
+        border-radius: 25px;
+        color: var(--text-color, #e6f1ff);
+        font-size: 0.92rem;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        width: 230px;
+        border-color: var(--primary-sky, #00d2ff);
+        box-shadow: 0 0 12px rgba(0, 210, 255, 0.3);
+    }
+
+    .search-container i {
+        position: absolute;
+        left: 13px;
+        color: var(--text-muted, #8892b0);
+        font-size: 0.92rem;
+        pointer-events: none;
+    }
+
+    /* 3. Controls & Theme Switcher */
     .nav-controls {
         display: flex;
         align-items: center;
@@ -67,60 +158,83 @@
 
     .theme-btn, .hamburger {
         background: transparent;
-        border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
+        border: 1px solid var(--border-color, rgba(0, 210, 255, 0.3));
         color: var(--text-color, #e6f1ff);
-        padding: 8px 12px;
-        border-radius: 8px;
+        padding: 9px 13px;
+        border-radius: 12px;
         cursor: pointer;
-        font-size: 1.1rem;
+        font-size: 1.15rem;
+        transition: all 0.3s ease;
     }
 
     .theme-btn:hover, .hamburger:hover {
         border-color: var(--primary-sky, #00d2ff);
         color: var(--primary-sky, #00d2ff);
+        background: rgba(0, 210, 255, 0.12);
     }
 
-    .hamburger {
-        display: none;
-    }
+    .hamburger { display: none; }
 
-    @media (max-width: 900px) {
+    /* Responsive */
+    @media (max-width: 1100px) {
         .hamburger { display: block; }
+        .search-container { display: none; }
         .nav-links {
             position: fixed;
-            top: 75px;
+            top: 80px;
             right: -100%;
             flex-direction: column;
             background: var(--bg-dark, #0a1118);
             width: 100%;
-            padding: 25px;
+            padding: 30px;
             transition: 0.4s ease;
             border-bottom: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
         .nav-links.active { right: 0; }
-        .nav-links li { width: 100%; text-align: center; margin: 5px 0; }
+        .nav-links li { width: 100%; text-align: center; margin: 8px 0; }
     }
 </style>
 
 <nav class="navbar">
-    <div class="logo">My<span>Profile</span></div>
-    
+    <!-- ១. Logo & Personal Brand (កែទំហំ Logo ឱ្យធំជាងមុនស្អាត) -->
+    <a href="#" id="logo-link" class="logo-brand">
+        <div class="logo-icon" style="background: transparent; box-shadow: none; padding: 0; width: 80px; height: 80px;">
+            <img src="../img/Logo.jpg" alt="Logo" style="width: 80px; height: 80px; border-radius: 60%; object-fit: cover; border: 2px solid var(--primary-sky, #00d2ff); box-shadow: 0 0 12px var(--accent-glow, rgba(0, 210, 255, 0.6));">
+        </div>
+        <div class="logo-text">CHHENG<span> </span></div>
+    </a>
+
+    <!-- Navigation Menu Links (ប្តូរជាភាសាខ្មែរទាំងអស់ ពេញលេញ) -->
+    <ul class="nav-links" id="nav-links">
+        <li><a href="#" id="link-home"><i class="fa-solid fa-house"></i> ទំព័រដើម</a></li>
+        <li><a href="#" id="link-about"><i class="fa-solid fa-user"></i> អំពីខ្ញុំ</a></li>
+        <li><a href="#" id="link-projects"><i class="fa-solid fa-folder-open"></i> ស្នាដៃ</a></li>
+        <li><a href="#" id="link-cv"><i class="fa-solid fa-file-pdf"></i> ប្រវត្តិរូប (CV)</a></li>
+        <li><a href="#" id="link-blog"><i class="fa-solid fa-pen-nib"></i> កំណត់ត្រា</a></li>
+        <li><a href="#" class="btn-nav" id="link-contact"><i class="fa-solid fa-paper-plane"></i> ទំនាក់ទំនង</a></li>
+    </ul>
+
+    <!-- Controls (Search, Theme Switcher & Hamburger) -->
     <div class="nav-controls">
+        <!-- ២. Smart Search Input (ភាសាខ្មែរ) -->
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+           <input type="text" id="smart-search" class="search-input" placeholder="ស្វែងរក..." oninput="handleGlobalSearch(event)" onkeydown="handleGlobalSearch(event)">
+        </div>
+
+        <!-- ៣. Theme Switcher (Dark / Light Mode) -->
         <button id="theme-toggle" class="theme-btn" title="ប្តូរម៉ូត ថ្ងៃ/យប់">
             <i class="fa-solid fa-moon"></i>
         </button>
+
+        <!-- Mobile Menu Toggle -->
         <button class="hamburger" id="hamburger-btn">
             <i class="fa-solid fa-bars"></i>
         </button>
     </div>
-
-    <ul class="nav-links" id="nav-links">
-        <li><a href="#" id="link-home"><i class="fa-solid fa-house"></i> ទំព័រដើម</a></li>
-        <li><a href="#" id="link-about"><i class="fa-solid fa-user"></i> អំពីខ្ញុំ</a></li>
-        <li><a href="#" id="link-projects"><i class="fa-solid fa-code"></i> ស្នាដៃ & Project</a></li>
-        <li><a href="#" id="link-cv"><i class="fa-solid fa-file-pdf"></i> CV Builder</a></li>
-        <li><a href="#" id="link-blog"><i class="fa-solid fa-pen-to-square"></i> Blog & Notes</a></li>
-        <li><a href="#" class="btn-nav" id="link-contact"><i class="fa-solid fa-paper-plane"></i> ទំនាក់ទំនង</a></li>
-    </ul>
 </nav>
+
+<script>
+
+</script>

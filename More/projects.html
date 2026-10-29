@@ -8,83 +8,166 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
 
-    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ Projects -->
+    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ Projects (ពង្រីកទទឹងកាត និងបង្រួមចន្លោះគៀនសងខាង) -->
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Kantumruuy Pro', sans-serif;
+        }
+
+        :root {
+            --primary-sky: #00d2ff;
+            --secondary-sky: #3a7bd5;
+            --bg-dark: #0a1118;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --text-color: #e6f1ff;
+            --text-muted: #8892b0;
+            --border-color: rgba(0, 210, 255, 0.25);
+            --accent-glow: rgba(0, 210, 255, 0.4);
+        }
+
+        body, body.dark-mode {
+            background-color: var(--bg-dark, #0a1118) !important;
+            color: var(--text-color, #e6f1ff) !important;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ពង្រីក max-width និងកាត់បន្ថយ padding សងខាងឱ្យកាតរីកធំពេញល្អ */
+        .page-container {
+            max-width: 1550px;
+            margin: 0 auto;
+            padding: 170px 3% 80px 3%;
+        }
+
+        /* Section Title Styling */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 span {
+            background: linear-gradient(135deg, #00d2ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Projects Grid Layout: ២ កាតក្នុង១ជួរ ទំហំធំទូលាយស្អាត */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
         }
 
         .project-card {
-            background: var(--card-bg, rgba(255, 255, 255, 0.05));
-            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-            border-radius: 15px;
+            background: var(--card-bg, rgba(15, 23, 42, 0.85));
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .project-card:hover {
             transform: translateY(-8px);
-            border-color: var(--primary-sky, #00d2ff);
-            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.25);
+            border-color: var(--primary-sky);
+            box-shadow: 0 15px 35px rgba(0, 210, 255, 0.25);
         }
 
         .project-img img {
             width: 100%;
-            height: 180px;
+            height: 260px;
             object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-img img {
+            transform: scale(1.03);
         }
 
         .project-info {
-            padding: 20px;
+            padding: 30px;
         }
 
         .project-info h3 {
             color: #fff;
-            margin-bottom: 10px;
-            font-size: 1.15rem;
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+            font-weight: 600;
         }
 
         .project-info p {
-            color: #a8b2d1;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 22px;
         }
 
         .tech-tags span {
             display: inline-block;
-            background: rgba(0, 210, 255, 0.15);
-            color: var(--primary-sky, #00d2ff);
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--primary-sky);
             border: 1px solid rgba(0, 210, 255, 0.3);
-            padding: 4px 10px;
-            font-size: 0.78rem;
-            border-radius: 12px;
-            margin: 3px;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            border-radius: 15px;
+            font-weight: 500;
         }
 
         .qr-box {
             margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-top: 18px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.15);
             text-align: center;
         }
 
         .qr-box img {
-            width: 85px;
-            height: 85px;
-            border-radius: 8px;
+            width: 95px;
+            height: 95px;
+            border-radius: 10px;
             background: #fff;
-            padding: 4px;
+            padding: 5px;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
         }
 
         .qr-box small {
             display: block;
-            margin-top: 6px;
-            color: #8892b0;
-            font-size: 0.8rem;
+            margin-top: 8px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive សម្រាប់អេក្រង់តូច ឬទូរស័ព្ទ */
+        @media (max-width: 950px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-container {
+                padding: 170px 5% 80px 5%;
+            }
         }
     </style>
 </head>
@@ -92,20 +175,22 @@
     <canvas id="bg-canvas"></canvas>
     <div id="header-container"></div>
 
-    <main class="page-container" style="padding-top: 110px;">
+    <main class="page-container">
         <section class="section-title">
-            <h2>ស្នាដៃ <span>និង Project</span> (My Projects)</h2>
-            <p>គម្រោងវេបសាយដែលខ្ញុំបានអភិវឌ្ឍន៍កន្លងមក</p>
+            <h2>ស្នាដៃ <span>និង Project</span></h2>
+            <p>គម្រោងវេបសាយ និងប្រព័ន្ធកម្មវិធីដែលខ្ញុំបានអភិវឌ្ឍន៍កន្លងមក</p>
         </section>
 
+        <!-- បង្ហាញ ២ កាតលើ និង ២ កាតក្រោម ទំហំធំពេញល្អ -->
         <div class="projects-grid">
+            <!-- កាតទី ១ -->
             <div class="project-card">
                 <div class="project-img">
                     <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&auto=format&fit=crop" alt="Project 1">
                 </div>
                 <div class="project-info">
                     <h3>Personal Portfolio Website</h3>
-                    <p>វេបសាយប្រូហ្វាលផ្ទាល់ខ្លួនដែលមាន Dark/Light mode និង CSS Animation។</p>
+                    <p>វេបសាយប្រូហ្វាលផ្ទាល់ខ្លួនដែលមាន Dark/Light mode, បន្ទាត់ Neon Glow និងចលនារស់រវើកស្រស់ស្អាត។</p>
                     <div class="tech-tags">
                         <span>HTML5</span>
                         <span>CSS3</span>
@@ -118,17 +203,58 @@
                 </div>
             </div>
 
+            <!-- កាតទី ២ -->
             <div class="project-card">
                 <div class="project-img">
                     <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&auto=format&fit=crop" alt="Project 2">
                 </div>
                 <div class="project-info">
                     <h3>E-Commerce Web App</h3>
-                    <p>ប្រព័ន្ធហាងទំនិញអនឡាញ ដែលអាចជ្រើសរើសទំនិញ និងគណនាតម្លៃ។</p>
+                    <p>ប្រព័ន្ធហាងទំនិញអនឡាញ ដែលអាចជ្រើសរើសទំនិញ មើលផលិតផល និងគណនាតម្លៃយ៉ាងរលូន។</p>
                     <div class="tech-tags">
                         <span>JavaScript</span>
                         <span>CSS Grid</span>
                         <span>API</span>
+                    </div>
+                    <div class="qr-box">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com" alt="QR Code">
+                        <small>ស្កេនមើល Demo</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- កាតទី ៣ (ជួរក្រោម) -->
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=500&auto=format&fit=crop" alt="Project 3">
+                </div>
+                <div class="project-info">
+                    <h3>University Library Management System</h3>
+                    <p>ប្រព័ន្ធគ្រប់គ្រងបណ្ណាល័យសាកលវិទ្យាល័យ ជួយសម្រួលដល់ការខ្ចី-សងសៀវភៅ និងស្វែងរកទិន្នន័យ។</p>
+                    <div class="tech-tags">
+                        <span>Node.js</span>
+                        <span>Express</span>
+                        <span>PostgreSQL</span>
+                    </div>
+                    <div class="qr-box">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com" alt="QR Code">
+                        <small>ស្កេនមើល Demo</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- កាតទី ៤ (ជួរក្រោម) -->
+            <div class="project-card">
+                <div class="project-img">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&auto=format&fit=crop" alt="Project 4">
+                </div>
+                <div class="project-info">
+                    <h3>Ching Skincare E-Commerce Platform</h3>
+                    <p>វេបសាយបង្ហាញផលិតផលសម្រស់ និងកែសម្ផស្សអនឡាញ រួមបញ្ចូលប្រព័ន្ធបញ្ជាទិញទំនិញទំនើប។</p>
+                    <div class="tech-tags">
+                        <span>React</span>
+                        <span>Tailwind CSS</span>
+                        <span>Supabase</span>
                     </div>
                     <div class="qr-box">
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://github.com" alt="QR Code">
@@ -142,12 +268,19 @@
     <div id="footer-container"></div>
     <script src="../script.js"></script>
     <script>
-        fetch('header.html').then(res => res.text()).then(data => {
-            document.getElementById('header-container').innerHTML = data;
-            setupNavLinks();
-            initHeaderEvents();
-        });
-        fetch('footer.html').then(res => res.text()).then(d => document.getElementById('footer-container').innerHTML = d);
+        fetch('header.html')
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+                setupNavLinks();
+                initHeaderEvents();
+            });
+
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
     </script>
 </body>
 </html>

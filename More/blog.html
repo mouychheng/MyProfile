@@ -143,26 +143,20 @@
     <div id="footer-container"></div>
     <script src="../script.js"></script>
     <script>
-        function filterBlog() {
-            let input = document.getElementById('blog-search').value.toLowerCase();
-            let cards = document.getElementsByClassName('blog-card');
-            for (let card of cards) {
-                let text = card.innerText.toLowerCase();
-                card.style.display = text.includes(input) ? 'block' : 'none';
-            }
-        }
-        function filterCategory(cat) {
-            let cards = document.getElementsByClassName('blog-card');
-            for (let card of cards) {
-                if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            }
-        }
-        fetch('header.html').then(res => res.text()).then(d => { document.getElementById('header-container').innerHTML = d; setupNavLinks(); initHeaderEvents(); });
-        fetch('footer.html').then(res => res.text()).then(d => document.getElementById('footer-container').innerHTML = d);
+        // ទាញយក Header មកដាក់រួចហៅ Function ស្វ័យប្រវត្តិ
+        fetch('header.html') // បើនៅ index.html ដាក់ 'More/header.html'
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+                setupNavLinks();
+                initHeaderEvents();
+            });
+
+        fetch('footer.html') // បើនៅ index.html ដាក់ 'More/footer.html'
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
     </script>
 </body>
 </html>

@@ -124,23 +124,22 @@
 
     <!-- ទីតាំងទាញយក Footer ដោយស្វ័យប្រវត្តិ -->
     <div id="footer-container"></div>
-
     <script src="../script.js"></script>
     <script>
-        // ទាញយក Header និង Footer មកដាក់ក្នុង More folder
-        fetch('header.html')
+        // ទាញយក Header មកដាក់រួចហៅ Function ស្វ័យប្រវត្តិ
+        fetch('header.html') // បើនៅ index.html ដាក់ 'More/header.html'
             .then(res => res.text())
             .then(data => {
                 document.getElementById('header-container').innerHTML = data;
-                document.getElementById('link-home').href = '../index.html';
-                document.getElementById('link-about').href = 'about.html';
-                document.getElementById('link-services').href = 'services.html';
-                document.getElementById('link-contact').href = 'contact.html';
+                setupNavLinks();
+                initHeaderEvents();
             });
 
-        fetch('footer.html')
+        fetch('footer.html') // បើនៅ index.html ដាក់ 'More/footer.html'
             .then(res => res.text())
-            .then(data => { document.getElementById('footer-container').innerHTML = data; });
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
     </script>
 </body>
 </html>

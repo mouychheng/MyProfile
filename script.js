@@ -1,8 +1,9 @@
-// Background Particle Animation ពណ៌ផ្ទៃមេឃ
+// ==========================================
+// 1.BACKGROUND PARTICLE ANIMATION
+// ==========================================
 const canvas = document.getElementById('bg-canvas');
 if (canvas) {
     const ctx = canvas.getContext('2d');
-
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -22,17 +23,14 @@ if (canvas) {
             this.speedY = Math.random() * 1 - 0.5;
             this.color = `rgba(0, 210, 255, ${Math.random() * 0.5 + 0.2})`;
         }
-
         update() {
             this.x += this.speedX;
             this.y += this.speedY;
-
             if (this.x > canvas.width) this.x = 0;
             if (this.x < 0) this.x = canvas.width;
             if (this.y > canvas.height) this.y = 0;
             if (this.y < 0) this.y = canvas.height;
         }
-
         draw() {
             ctx.fillStyle = this.color;
             ctx.beginPath();
@@ -47,18 +45,21 @@ if (canvas) {
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
+        particles.forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(animate);
     }
-
     animate();
 }
 
-// គ្រប់គ្រង Link ក្នុង More Folder ពេលទាញយក Header មកដាក់
+// ==========================================
+// 2. SMART NAVBAR, PATH & ACTIVE PAGE SETUP
+// ==========================================
 function setupNavLinks() {
+    const isRoot = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
+    const currentFileName = window.location.pathname.split('/').pop().toLowerCase();
+
+    // កំណត់ Link ទៅតាមថតឯកសារដោយស្វ័យប្រវត្តិ
+    const logoLink = document.getElementById('logo-link');
     const linkHome = document.getElementById('link-home');
     const linkAbout = document.getElementById('link-about');
     const linkProjects = document.getElementById('link-projects');
@@ -66,15 +67,35 @@ function setupNavLinks() {
     const linkBlog = document.getElementById('link-blog');
     const linkContact = document.getElementById('link-contact');
 
-    if (linkHome) linkHome.href = '../index.html';
-    if (linkAbout) linkAbout.href = 'about.html';
-    if (linkProjects) linkProjects.href = 'projects.html';
-    if (linkCv) linkCv.href = 'cv-builder.html';
-    if (linkBlog) linkBlog.href = 'blog.html';
-    if (linkContact) linkContact.href = 'contact.html';
+    if (logoLink) logoLink.href = isRoot ? 'index.html' : '../index.html';
+    if (linkHome) linkHome.href = isRoot ? 'index.html' : '../index.html';
+    if (linkAbout) linkAbout.href = isRoot ? 'More/about.html' : 'about.html';
+    if (linkProjects) linkProjects.href = isRoot ? 'More/projects.html' : 'projects.html';
+    if (linkCv) linkCv.href = isRoot ? 'More/cv-builder.html' : 'cv-builder.html';
+    if (linkBlog) linkBlog.href = isRoot ? 'More/blog.html' : 'blog.html';
+    if (linkContact) linkContact.href = isRoot ? 'More/contact.html' : 'contact.html';
+
+    // 📌 ចាប់យកទំព័របច្ចុប្បន្នស្វ័យប្រវត្តិដើម្បីដាក់បន្ទាត់ភ្លើង Active Page
+    setTimeout(() => {
+        if (isRoot || currentFileName === '' || currentFileName === 'index.html') {
+            if (linkHome) linkHome.classList.add('active-page');
+        } else if (currentFileName.includes('about')) {
+            if (linkAbout) linkAbout.classList.add('active-page');
+        } else if (currentFileName.includes('project')) {
+            if (linkProjects) linkProjects.classList.add('active-page');
+        } else if (currentFileName.includes('cv')) {
+            if (linkCv) linkCv.classList.add('active-page');
+        } else if (currentFileName.includes('blog')) {
+            if (linkBlog) linkBlog.classList.add('active-page');
+        } else if (currentFileName.includes('contact')) {
+            if (linkContact) linkContact.classList.add('active-page');
+        }
+    }, 30);
 }
 
-// គ្រប់គ្រង Hamburger Mobile Menu និង Theme Toggle (ប្តូរម៉ូត ថ្ងៃ/យប់)
+// ==========================================
+// 3. HEADER EVENTS (Hamburger & Theme Toggle)
+// ==========================================
 function initHeaderEvents() {
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const navLinks = document.getElementById('nav-links');
@@ -98,5 +119,43 @@ function initHeaderEvents() {
                 }
             }
         });
+    }
+}
+
+// ==========================================
+// 4. SMART SEARCH LOGIC (កែសម្រួលថ្មី៖ មិនលោតផ្ដេសផ្ដាស និង Filter ចំណងជើងភ្លាមៗ)
+// ==========================================
+function handleGlobalSearch(e) {
+    let keyword = e.target.value.toLowerCase().trim();
+
+    // ១. ប្រសិនបើស្ថិតនៅលើទំព័រ Blog (blog.html) ឱ្យវា Filter ចំណងជើងអត្ថបទភ្លាមៗតាមការវាយ
+    if (typeof filterBlog === 'function') {
+        let blogSearchInput = document.getElementById('blog-search');
+        if (blogSearchInput) {
+            blogSearchInput.value = keyword;
+            filterBlog();
+        }
+        return;
+    }
+
+    // ២. ប្រសិនបើស្ថិតនៅលើទំព័រ Projects (projects.html) ឱ្យវា Filter ចំណងជើង Project ភ្លាមៗ
+    const projectCards = document.querySelectorAll('.project-card');
+    if (projectCards.length > 0) {
+        projectCards.forEach(card => {
+            let text = card.innerText.toLowerCase();
+            card.style.display = text.includes(keyword) ? 'block' : 'none';
+        });
+        return;
+    }
+
+    // ៣. ប្រសិនបើស្ថិតនៅលើទំព័រផ្សេង (ឧ. index.html) ហើយចុច Enter ទើបវាលោតទៅទំព័រ Blog ជាមួយពាក្យស្វែងរក
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        if (keyword.length > 0) {
+            const isRoot = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
+            const targetPath = isRoot ? 'More/blog.html' : 'blog.html';
+            
+            window.location.href = `${targetPath}?search=${encodeURIComponent(keyword)}`;
+        }
     }
 }

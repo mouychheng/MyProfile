@@ -355,40 +355,20 @@
     <div id="footer-container"></div>
     <script src="../script.js"></script>
     <script>
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const output = document.getElementById('cv-profile-img');
-                if (output) output.src = reader.result;
-            };
-            if (event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
-        }
+        // ទាញយក Header មកដាក់រួចហៅ Function ស្វ័យប្រវត្តិ
+        fetch('header.html') // បើនៅ index.html ដាក់ 'More/header.html'
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+                setupNavLinks();
+                initHeaderEvents();
+            });
 
-        function updateCV() {
-            document.getElementById('p-fullname').innerText = document.getElementById('in-fullname').value || 'SOT MOUYCHHENG';
-            document.getElementById('p-title').innerText = document.getElementById('in-title').value || 'Web Developer';
-            document.getElementById('p-phone').innerText = document.getElementById('in-phone').value || '0718589592';
-            document.getElementById('p-email').innerText = document.getElementById('in-email').value || 'mouychheng5555@gmail.com';
-            document.getElementById('p-address').innerText = document.getElementById('in-address').value || 'រាជធានីភ្នំពេញ, កម្ពុជា';
-            document.getElementById('p-education').innerText = document.getElementById('in-education').value || 'និស្សិតបរិញ្ញាបត្រវិទ្យាសាស្ត្រកុំព្យូទ័រ (Computer Science)';
-            document.getElementById('p-goal').innerText = document.getElementById('in-goal').value || 'ប្រាថ្នាចង់ក្លាយជា Full-Stack Web Developer...';
-            document.getElementById('p-hobbies').innerText = document.getElementById('in-hobbies').value || 'ស្រាវជ្រាវកូដថ្មីៗ, អានសៀវភៅបច្ចេកវិទ្យា';
-            
-            let skillsInput = document.getElementById('in-skills').value;
-            if (skillsInput) {
-                let skillsArr = skillsInput.split(',');
-                let tagsHTML = '';
-                skillsArr.forEach(s => {
-                    if (s.trim() !== '') tagsHTML += `<span>${s.trim()}</span>`;
-                });
-                document.getElementById('p-skills').innerHTML = tagsHTML;
-            } else {
-                document.getElementById('p-skills').innerHTML = `<span>HTML5 / CSS3</span><span>JavaScript ES6</span><span>CSS Animation</span><span>Git & GitHub</span>`;
-            }
-        }
-
-        fetch('header.html').then(res => res.text()).then(d => { document.getElementById('header-container').innerHTML = d; setupNavLinks(); initHeaderEvents(); });
-        fetch('footer.html').then(res => res.text()).then(d => document.getElementById('footer-container').innerHTML = d);
+        fetch('footer.html') // បើនៅ index.html ដាក់ 'More/footer.html'
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
     </script>
 </body>
 </html>
