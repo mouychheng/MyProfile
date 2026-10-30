@@ -3,96 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog & Notes - កត់ត្រាចំណេះដឹង</title>
+    <title>កំណត់ត្រា (Blog & Notes) - CHHENG.dev</title>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruuy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
 
-    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ Blog -->
     <style>
-        .blog-search-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Kantumruuy Pro', sans-serif;
         }
 
-        .blog-search-bar input {
-            padding: 10px 20px;
-            border-radius: 25px;
-            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-            background: var(--card-bg, rgba(255, 255, 255, 0.05));
+        :root {
+            --primary-sky: #00d2ff;
+            --secondary-sky: #3a7bd5;
+            --bg-dark: #0a1118;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --text-color: #e6f1ff;
+            --text-muted: #8892b0;
+            --border-color: rgba(0, 210, 255, 0.3);
+            --accent-glow: rgba(0, 210, 255, 0.5);
+        }
+
+        body, body.dark-mode {
+            background-color: var(--bg-dark, #0a1118) !important;
+            color: var(--text-color, #e6f1ff) !important;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .page-container {
+            max-width: 1550px;
+            margin: 0 auto;
+            padding: 170px 5% 80px 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
             color: #fff;
-            width: 260px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+        }
+
+        .section-title h2 span {
+            background: linear-gradient(135deg, #00d2ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--primary-sky);
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Search & Filter Categories Bar (កែសម្រួលសម្រាប់ទូរស័ព្ទ និងកុំព្យូទ័រ) */
+        .blog-filter-container {
+            display: flex;
+            flex-direction: column; /* ដាក់ប្រអប់ Search លើ និងប៊ូតុង Categories ក្រោម */
+            gap: 15px;
+            margin-bottom: 40px;
+            background: var(--card-bg);
+            padding: 20px 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-search-box {
+            position: relative;
+            width: 100%; /* ឱ្យប្រអប់ Search រីកពេញទទឹងស្អាត */
+        }
+
+        .blog-search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            color: #fff;
             outline: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .blog-search-box input:focus {
+            border-color: var(--primary-sky);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .blog-search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            flex-wrap: nowrap; /* មិនឱ្យបែកចុះជួរផ្ដេសផ្ដាស */
+            overflow-x: auto;   /* ឱ្យអាចអូសឆ្វេងស្តាំ (Horizontal Scroll) បានយ៉ាងរលូនលើទូរស័ព្ទ */
+            gap: 10px;
+            padding-bottom: 5px;
+            scrollbar-width: none; /* លាក់ Scrollbar លើ Firefox */
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none; /* លាក់ Scrollbar លើ Chrome/Safari */
         }
 
         .cat-btn {
-            background: transparent;
-            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-            color: #a8b2d1;
-            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 9px 18px;
             border-radius: 20px;
+            font-size: 0.9rem;
             cursor: pointer;
-            font-size: 0.85rem;
-            margin-left: 5px;
+            white-space: nowrap; /* មិនให้อក្សរបកចុះជួរ */
             transition: all 0.3s ease;
         }
 
-        .cat-btn.active, .cat-btn:hover {
-            background: var(--primary-sky, #00d2ff);
-            color: #000;
+        .cat-btn:hover, .cat-btn.active {
+            background: var(--primary-sky);
+            color: #0a1118;
+            border-color: var(--primary-sky);
+            box-shadow: 0 0 15px var(--accent-glow);
+            font-weight: 600;
         }
 
+        /* Blog Grid Layout */
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
         .blog-card {
-            background: var(--card-bg, rgba(255, 255, 255, 0.05));
-            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-            padding: 25px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
         }
 
         .blog-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-sky, #00d2ff);
+            transform: translateY(-8px);
+            border-color: var(--primary-sky);
+            box-shadow: 0 15px 40px rgba(0, 210, 255, 0.3);
+        }
+
+        .blog-img-box {
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-img-box img {
+            transform: scale(1.08);
+        }
+
+        .blog-category-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(10, 17, 24, 0.85);
+            color: var(--primary-sky);
+            border: 1px solid var(--border-color);
+            padding: 5px 12px;
+            font-size: 0.78rem;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .blog-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .blog-date {
-            font-size: 0.8rem;
-            color: #8892b0;
-            display: block;
+            font-size: 0.82rem;
+            color: var(--text-muted);
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .blog-card h3 {
+        .blog-title {
+            font-size: 1.25rem;
+            font-weight: 600;
             color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            line-height: 1.4;
         }
 
-        .blog-card p {
-            color: #a8b2d1;
+        .blog-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-sky);
+            text-decoration: none;
+            font-weight: 600;
             font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
+            transition: gap 0.3s ease;
         }
 
-        .tag {
-            display: inline-block;
-            background: rgba(0, 210, 255, 0.15);
-            color: var(--primary-sky, #00d2ff);
-            padding: 3px 10px;
-            font-size: 0.75rem;
-            border-radius: 10px;
+        .read-more-btn:hover {
+            gap: 12px;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
         }
     </style>
 </head>
@@ -100,51 +266,108 @@
     <canvas id="bg-canvas"></canvas>
     <div id="header-container"></div>
 
-    <main class="page-container" style="padding-top: 110px;">
+    <main class="page-container">
         <section class="section-title">
-            <h2>Blog <span>& Notes</span></h2>
-            <p>កត់ត្រាចំណេះដឹង IT, Coding និងចែករំលែកបទពិសោធន៍</p>
+            <h2>កំណត់ត្រា & <span>អត្ថបទ</span></h2>
+            <p>စုគុំរាល់ចំណេះដឹង គំនិតច្នៃប្រឌិត និងកំណត់ហេតុប្រចាំថ្ងៃរបស់ខ្ញុំ</p>
         </section>
 
-        <div class="blog-search-bar">
-            <input type="text" id="blog-search" placeholder="ស្វែងរកអត្ថបទ..." onkeyup="filterBlog()">
-            <div class="category-tags">
-                <button class="cat-btn active" onclick="filterCategory('all')">ទាំងអស់</button>
-                <button class="cat-btn" onclick="filterCategory('HTML')">HTML/CSS</button>
-                <button class="cat-btn" onclick="filterCategory('JS')">JavaScript</button>
-                <button class="cat-btn" onclick="filterCategory('GitHub')">GitHub</button>
+        <!-- Categories Filter & Search Bar -->
+        <div class="blog-filter-container">
+            <div class="blog-search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="blog-search" placeholder="ស្វែងរកកំណត់ត្រា..." oninput="filterBlog()">
+            </div>
+
+            <div class="category-tabs">
+                <button class="cat-btn active" onclick="filterCategory('all', this)">ទាំងអស់ (All)</button>
+                <button class="cat-btn" onclick="filterCategory('study', this)"><i class="fa-solid fa-book"></i> កំណត់ត្រាសិក្សា</button>
+                <button class="cat-btn" onclick="filterCategory('personal', this)"><i class="fa-solid fa-user"></i> កំណត់ត្រាផ្ទាល់ខ្លួន</button>
+                <button class="cat-btn" onclick="filterCategory('ideas', this)"><i class="fa-solid fa-lightbulb"></i> គំនិត និងការច្នៃប្រឌិត</button>
+                <button class="cat-btn" onclick="filterCategory('journal', this)"><i class="fa-solid fa-calendar-days"></i> កំណត់ហេតុប្រចាំថ្ងៃ</button>
+                <button class="cat-btn" onclick="filterCategory('plans', this)"><i class="fa-solid fa-bullseye"></i> ផែនការអនាគត</button>
             </div>
         </div>
 
-        <div class="blog-grid" id="blog-grid">
-            <article class="blog-card" data-cat="HTML">
-                <span class="blog-date">២៧ តុលា ២០២៦</span>
-                <h3>របៀបប្រើប្រាស់ Flexbox និង CSS Grid ឱ្យស្ទាត់ជំនាញ</h3>
-                <p>បច្ចេកទេសរៀបចំ Layout លើវេបសាយឱ្យ Responsive លើគ្រប់ឧបករណ៍ទូរស័ព្ទ និងកុំព្យូទ័រ...</p>
-                <span class="tag">HTML/CSS</span>
-            </article>
+        <!-- Blog Cards Grid -->
+        <div class="blog-grid" id="blog-grid-container">
+            <!-- Card 1: Study -->
+            <div class="blog-card" data-category="study">
+                <div class="blog-img-box">
+                    <span class="blog-category-tag">កំណត់ត្រាសិក្សា</span>
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&auto=format&fit=crop" alt="Study Note">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date"><i class="fa-regular fa-calendar"></i> ២៤ កុម្ភៈ ២០២៦</div>
+                    <h3 class="blog-title">ការស្វែងយល់ពី Docker Containers & System Inspection</h3>
+                    <p class="blog-desc">សេចក្តីសង្ខេបនិងចំណុចសំខាន់ៗពីការអនុវត្តប្រព័ន្ធកុងតឺន័រ Docker ក្នុងការអភិវឌ្ឍន៍កម្មវិធីវេបសាយ...</p>
+                    <a href="#" class="read-more-btn">អានបន្ថែម <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
 
-            <article class="blog-card" data-cat="GitHub">
-                <span class="blog-date">២៥ តុលា ២០២៦</span>
-                <h3>របៀប Deploy Website ឡើង GitHub Pages ឥតគិតថ្លៃ</h3>
-                <p>ជំហានងាយៗក្នុងការបង្កើត Repository និងបង្ហោះវេបសាយឱ្យគេមើលជុំវិញពិភពលោក...</p>
-                <span class="tag">GitHub</span>
-            </article>
+            <!-- Card 2: Ideas -->
+            <div class="blog-card" data-category="ideas">
+                <div class="blog-img-box">
+                    <span class="blog-category-tag">គំនិត និងការច្នៃប្រឌិត</span>
+                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=500&auto=format&fit=crop" alt="UI Design">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date"><i class="fa-regular fa-calendar"></i> ២០ កុម្ភៈ ២០២៦</div>
+                    <h3 class="blog-title">ការច្នៃម៉ូដ UI/UX ពណ៌ផ្ទៃមេឃ (Sky Blue Neon Aesthetic)</h3>
+                    <p class="blog-desc">គំនិតបង្កើតប្រព័ន្ធពណ៌ និងពន្លឺ Neon សម្រាប់គេហទំព័រផ្ទាល់ខ្លួនឱ្យមានភាពទាក់ទាញនិងស្រទន់...</p>
+                    <a href="#" class="read-more-btn">អានបន្ថែម <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
 
-            <article class="blog-card" data-cat="JS">
-                <span class="blog-date">២០ តុលា ២០២៦</span>
-                <h3>ស្វែងយល់ពី Fetch API ក្នុង JavaScript ES6</h3>
-                <p>វិធីសាស្ត្រទាញយកឯកសារ Header, Footer មកប្រើឡើងវិញដោយមិនបាច់សរសេរដដែលៗ...</p>
-                <span class="tag">JavaScript</span>
-            </article>
+            <!-- Card 3: Personal -->
+            <div class="blog-card" data-category="personal">
+                <div class="blog-img-box">
+                    <span class="blog-category-tag">កំណត់ត្រាផ្ទាល់ខ្លួន</span>
+                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=500&auto=format&fit=crop" alt="Personal Note">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date"><i class="fa-regular fa-calendar"></i> ១៥ កុម្ភៈ ២០២៦</div>
+                    <h3 class="blog-title">ការគ្រប់គ្រងពេលវេលារវាងការសិក្សានិងអាជីវកម្មអនឡាញ</h3>
+                    <p class="blog-desc">បទពិសោធន៍ផ្ទាល់ខ្លួនក្នុងការបែងចែកម៉ោងរៀនជំនាញ IT និងការគ្រប់គ្រងហាង Ching Skincare...</p>
+                    <a href="#" class="read-more-btn">អានបន្ថែម <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Card 4: Journal -->
+            <div class="blog-card" data-category="journal">
+                <div class="blog-img-box">
+                    <span class="blog-category-tag">កំណត់ហេតុប្រចាំថ្ងៃ</span>
+                    <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=500&auto=format&fit=crop" alt="Daily Journal">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date"><i class="fa-regular fa-calendar"></i> ១០ កុម្ភៈ ២០២៦</div>
+                    <h3 class="blog-title">កំណត់ហេតុថ្ងៃនេះ៖ ការដោះស្រាយ Bug ប្រព័ន្ធ Database</h3>
+                    <p class="blog-desc">ថ្ងៃនេះបានជួបបញ្ហាការតភ្ជាប់ PostgreSQL និង Supabase ប៉ុន្តែបានដោះស្រាយជោគជ័យដោយរលូន...</p>
+                    <a href="#" class="read-more-btn">អានបន្ថែម <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Card 5: Plans -->
+            <div class="blog-card" data-category="plans">
+                <div class="blog-img-box">
+                    <span class="blog-category-tag">ផែនការអនាគត</span>
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&auto=format&fit=crop" alt="Future Plans">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date"><i class="fa-regular fa-calendar"></i> ០១ កុម្ភៈ ២០២៦</div>
+                    <h3 class="blog-title">ផែនការបញ្ចប់ឆ្នាំទី ៤ និងគម្រោង Thesis របស់ខ្ញុំ</h3>
+                    <p class="blog-desc">ទិសដៅនិងគោលដៅធំៗសម្រាប់ឆ្នាំសិក្សាចុងក្រោយ ព្រមទាំងការអភិវឌ្ឍន៍ Software Project ឱ្យចេញជារូបរាង...</p>
+                    <a href="#" class="read-more-btn">អានបន្ថែម <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
         </div>
     </main>
 
     <div id="footer-container"></div>
     <script src="../script.js"></script>
     <script>
-        // ទាញយក Header មកដាក់រួចហៅ Function ស្វ័យប្រវត្តិ
-        fetch('header.html') // បើនៅ index.html ដាក់ 'More/header.html'
+        // Fetch Header & Footer
+        fetch('header.html')
             .then(res => res.text())
             .then(data => {
                 document.getElementById('header-container').innerHTML = data;
@@ -152,11 +375,44 @@
                 initHeaderEvents();
             });
 
-        fetch('footer.html') // បើនៅ index.html ដាក់ 'More/footer.html'
+        fetch('footer.html')
             .then(res => res.text())
             .then(data => {
                 document.getElementById('footer-container').innerHTML = data;
             });
+
+        // Category Filter Logic
+        let currentCategory = 'all';
+
+        function filterCategory(category, btnElement) {
+            currentCategory = category;
+            
+            // Highlight active button
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            filterBlog();
+        }
+
+        // Combined Filter (Category + Search Keyword)
+        function filterBlog() {
+            let keyword = document.getElementById('blog-search').value.toLowerCase().trim();
+            let cards = document.querySelectorAll('.blog-card');
+
+            cards.forEach(card => {
+                let category = card.getAttribute('data-category');
+                let text = card.innerText.toLowerCase();
+
+                let matchesCategory = (currentCategory === 'all' || category === currentCategory);
+                let matchesSearch = text.includes(keyword);
+
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 // ==========================================
-// 1.BACKGROUND PARTICLE ANIMATION
+// 1. BACKGROUND PARTICLE ANIMATION
 // ==========================================
 const canvas = document.getElementById('bg-canvas');
 if (canvas) {
@@ -58,22 +58,20 @@ function setupNavLinks() {
     const isRoot = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
     const currentFileName = window.location.pathname.split('/').pop().toLowerCase();
 
-    // កំណត់ Link ទៅតាមថតឯកសារដោយស្វ័យប្រវត្តិ
     const logoLink = document.getElementById('logo-link');
     const linkHome = document.getElementById('link-home');
     const linkAbout = document.getElementById('link-about');
     const linkProjects = document.getElementById('link-projects');
     const linkCv = document.getElementById('link-cv');
     const linkBlog = document.getElementById('link-blog');
-    const linkContact = document.getElementById('link-contact');
 
+    // កំណត់ Link ឱ្យត្រូវតាមថត Root និង More/
     if (logoLink) logoLink.href = isRoot ? 'index.html' : '../index.html';
     if (linkHome) linkHome.href = isRoot ? 'index.html' : '../index.html';
     if (linkAbout) linkAbout.href = isRoot ? 'More/about.html' : 'about.html';
     if (linkProjects) linkProjects.href = isRoot ? 'More/projects.html' : 'projects.html';
     if (linkCv) linkCv.href = isRoot ? 'More/cv-builder.html' : 'cv-builder.html';
     if (linkBlog) linkBlog.href = isRoot ? 'More/blog.html' : 'blog.html';
-    if (linkContact) linkContact.href = isRoot ? 'More/contact.html' : 'contact.html';
 
     // 📌 ចាប់យកទំព័របច្ចុប្បន្នស្វ័យប្រវត្តិដើម្បីដាក់បន្ទាត់ភ្លើង Active Page
     setTimeout(() => {
@@ -87,8 +85,6 @@ function setupNavLinks() {
             if (linkCv) linkCv.classList.add('active-page');
         } else if (currentFileName.includes('blog')) {
             if (linkBlog) linkBlog.classList.add('active-page');
-        } else if (currentFileName.includes('contact')) {
-            if (linkContact) linkContact.classList.add('active-page');
         }
     }, 30);
 }
@@ -123,12 +119,11 @@ function initHeaderEvents() {
 }
 
 // ==========================================
-// 4. SMART SEARCH LOGIC (កែសម្រួលថ្មី៖ មិនលោតផ្ដេសផ្ដាស និង Filter ចំណងជើងភ្លាមៗ)
+// 4. SMART SEARCH LOGIC
 // ==========================================
 function handleGlobalSearch(e) {
     let keyword = e.target.value.toLowerCase().trim();
 
-    // ១. ប្រសិនបើស្ថិតនៅលើទំព័រ Blog (blog.html) ឱ្យវា Filter ចំណងជើងអត្ថបទភ្លាមៗតាមការវាយ
     if (typeof filterBlog === 'function') {
         let blogSearchInput = document.getElementById('blog-search');
         if (blogSearchInput) {
@@ -138,7 +133,6 @@ function handleGlobalSearch(e) {
         return;
     }
 
-    // ២. ប្រសិនបើស្ថិតនៅលើទំព័រ Projects (projects.html) ឱ្យវា Filter ចំណងជើង Project ភ្លាមៗ
     const projectCards = document.querySelectorAll('.project-card');
     if (projectCards.length > 0) {
         projectCards.forEach(card => {
@@ -148,7 +142,6 @@ function handleGlobalSearch(e) {
         return;
     }
 
-    // ៣. ប្រសិនបើស្ថិតនៅលើទំព័រផ្សេង (ឧ. index.html) ហើយចុច Enter ទើបវាលោតទៅទំព័រ Blog ជាមួយពាក្យស្វែងរក
     if (e.key === 'Enter') {
         e.preventDefault();
         if (keyword.length > 0) {
@@ -157,5 +150,23 @@ function handleGlobalSearch(e) {
             
             window.location.href = `${targetPath}?search=${encodeURIComponent(keyword)}`;
         }
+    }
+}
+
+// ==========================================
+// 5. SCROLL TO FOOTER (សម្រាប់ប៊ូតុងទំនាក់ទំនង - ទៅកាន់ Footer ផ្ទាល់គ្រប់ទំព័រ)
+// ==========================================
+function scrollToFooter(event) {
+    event.preventDefault();
+    
+    // ស្វែងរក Footer តាមរយៈ id="site-footer" នៅលើទំព័របច្ចុប្បន្ន
+    const footer = document.getElementById('site-footer') || document.querySelector('.site-footer');
+    
+    if (footer) {
+        // ប្រសិនបើរកឃើញ Footer នៅលើទំព័រនេះ វារំកិលចុះក្រោមយ៉ាងរលូនភ្លាមៗ
+        footer.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        // ករណីរកមិនឃើញទាល់តែសោះ ទើបវាបញ្ជូនទៅកាន់ទំព័រដើមព្រមទាំងភ្ជាប់ Hash ទៅ Footer
+        window.location.href = 'index.html#site-footer';
     }
 }

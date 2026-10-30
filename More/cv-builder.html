@@ -8,130 +8,200 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
 
-    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ CV Builder -->
+    <!-- CSS ផ្ទាល់សម្រាប់ទំព័រ CV Builder (Responsive ស្អាតលើទូរស័ព្ទ) -->
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Kantumruuy Pro', sans-serif;
+        }
+
+        :root {
+            --primary-sky: #00d2ff;
+            --secondary-sky: #3a7bd5;
+            --bg-dark: #0a1118;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --text-color: #e6f1ff;
+            --text-muted: #8892b0;
+            --border-color: rgba(0, 210, 255, 0.3);
+            --accent-glow: rgba(0, 210, 255, 0.5);
+        }
+
+        body, body.dark-mode {
+            background-color: var(--bg-dark, #0a1118) !important;
+            color: var(--text-color, #e6f1ff) !important;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas បាញ់គ្រាប់ពន្លឺ Particle */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .page-container {
+            max-width: 1550px;
+            margin: 0 auto;
+            padding: 170px 3% 80px 3%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section Title ជាមួយ Neon Glow */
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+        }
+
+        .section-title h2 span {
+            background: linear-gradient(135deg, #00d2ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--primary-sky);
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
         .cv-builder-wrapper {
             display: grid;
             grid-template-columns: 1fr 1.3fr;
-            gap: 30px;
+            gap: 35px;
             align-items: start;
         }
 
-        @media (max-width: 950px) {
-            .cv-builder-wrapper {
-                grid-template-columns: 1fr;
-            }
+        .cv-preview-section {
+            width: 100%;
+            overflow-x: auto; /* ការពារកុំឱ្យហៀរអេក្រង់លើទូរស័ព្ទ */
         }
 
+        /* ផ្នែក Input Form */
         .cv-input-section {
-            background: var(--card-bg, rgba(255, 255, 255, 0.05));
-            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
-            padding: 25px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
+            background: var(--card-bg, rgba(15, 23, 42, 0.85));
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 18px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(0, 210, 255, 0.05);
+            transition: all 0.3s ease;
         }
 
         .cv-input-section h3 {
             color: var(--primary-sky, #00d2ff);
-            margin-bottom: 15px;
-            font-size: 1.1rem;
+            margin-bottom: 18px;
+            font-size: 1.15rem;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-            color: #a8b2d1;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
 
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px 15px;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color, rgba(0, 210, 255, 0.2));
+            border: 1px solid var(--border-color);
             color: #fff;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
             outline: none;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus, .form-group textarea:focus {
             border-color: var(--primary-sky, #00d2ff);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
         }
 
+        /* Floating CV Sheet animation */
         .floating-cv {
-            animation: floatCV 5s ease-in-out infinite;
+            animation: floatCV 5s ease-in-out infinite alternate;
         }
 
         @keyframes floatCV {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            0% { transform: translateY(0px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 210, 255, 0.2); }
+            100% { transform: translateY(-10px); box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 35px rgba(0, 210, 255, 0.5); }
         }
 
-        .pulse-btn {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
-        }
-
-        /* CV Sheet Layout */
+        /* ==========================================
+           CV SHEET LAYOUT
+           ========================================== */
         .cv-sheet {
             background: #ffffff;
             color: #1a202c;
             width: 100%;
-            min-height: 850px;
-            border-radius: 12px;
+            min-height: 1050px;
+            border-radius: 15px;
             display: grid;
             grid-template-columns: 36% 64%;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             overflow: hidden;
+            border: 2px solid rgba(0, 210, 255, 0.4);
         }
 
         .cv-sidebar {
             background: linear-gradient(180deg, #0f2b48 0%, #0a192f 100%);
             color: #ffffff;
-            padding: 30px 20px;
+            padding: 45px 25px;
         }
 
         .cv-avatar-box {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .avatar-glow {
-            width: 110px;
-            height: 110px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--primary-sky, #00d2ff);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.7);
         }
 
         .cv-block {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .cv-block h4 {
-            font-size: 0.88rem;
+            font-size: 1rem;
             letter-spacing: 1px;
             color: var(--primary-sky, #00d2ff);
-            margin-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 4px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            padding-bottom: 6px;
+            text-shadow: 0 0 8px rgba(0, 210, 255, 0.4);
         }
 
         .cv-block p, .cv-block span {
-            font-size: 0.8rem;
+            font-size: 0.95rem;
             color: #cbd5e1;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             word-break: break-word;
         }
 
@@ -140,79 +210,187 @@
             background: rgba(0, 210, 255, 0.15);
             color: var(--primary-sky, #00d2ff);
             border: 1px solid rgba(0, 210, 255, 0.3);
-            padding: 4px 8px;
-            font-size: 0.75rem;
-            border-radius: 6px;
-            margin: 3px;
+            padding: 6px 12px;
+            font-size: 0.88rem;
+            border-radius: 8px;
+            margin: 5px;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
         }
 
         .cv-main {
-            padding: 35px 30px;
+            padding: 50px 40px;
             background: #ffffff;
         }
 
         .cv-header-title h1 {
-            font-size: 1.8rem;
+            font-size: 2.4rem;
             font-weight: 700;
             color: #0f2b48;
+            margin-bottom: 4px;
         }
 
         .p-job-title {
-            font-size: 0.95rem;
+            font-size: 1.15rem;
             color: #0077b6;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .cv-section {
-            margin-bottom: 20px;
+            margin-bottom: 28px;
         }
 
         .cv-section h3 {
-            font-size: 0.92rem;
+            font-size: 1.05rem;
             color: #0f2b48;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .cv-section hr {
             border: none;
             border-top: 2px solid #0f2b48;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .cv-section p, .cv-section li, .cv-section strong {
-            font-size: 0.85rem;
+            font-size: 0.98rem;
             color: #334e68;
-            line-height: 1.5;
+            line-height: 1.7;
         }
 
         .exp-title-row {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
+            font-size: 1rem;
             color: #0f2b48;
+            font-weight: 600;
         }
 
         .cv-section small {
             color: #627d98;
             display: block;
             margin-bottom: 6px;
+            font-size: 0.88rem;
         }
 
         .cv-section ul {
-            padding-left: 18px;
+            padding-left: 20px;
         }
 
+        /* Pulse Button Effect */
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-sky), var(--secondary-sky));
+            color: #fff;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 210, 255, 0.8);
+        }
+
+        .pulse-btn {
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
+        }
+
+        /* ==========================================
+           RESPONSIVE STYLING សម្រាប់អេក្រង់ទូរស័ព្ទ (MOBILE & TABLET)
+           ========================================== */
+        @media (max-width: 1024px) {
+            .page-container {
+                padding-top: 130px;
+            }
+            .cv-builder-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            .cv-input-section {
+                padding: 20px;
+            }
+            
+            /* កែសម្រួល CV Sheet ឱ្យបង្ហាញជាជួរឈរទោលលើទូរស័ព្ទ */
+            .cv-sheet {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+            .cv-sidebar {
+                padding: 30px 20px;
+            }
+            .avatar-glow {
+                width: 100px;
+                height: 100px;
+            }
+            .cv-main {
+                padding: 30px 20px;
+            }
+            .cv-header-title h1 {
+                font-size: 1.6rem;
+            }
+            .p-job-title {
+                font-size: 1rem;
+            }
+        }
+
+        /* ==========================================
+           MEDIA PRINT (សម្រាប់ Print/Download ជា PDF លើ A4)
+           ========================================== */
         @media print {
-            body * { visibility: hidden; }
-            #cv-print-area, #cv-print-area * { visibility: visible; }
+            body * { 
+                visibility: hidden !important; 
+            }
+            #cv-print-area, #cv-print-area * { 
+                visibility: visible !important; 
+            }
             #cv-print-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                box-shadow: none;
-                animation: none;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                min-height: 100vh !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                animation: none !important;
+                transform: none !important;
+                border: none !important;
+                grid-template-columns: 36% 64% !important; /* រក្សាទុកទ្រង់ទ្រាយ A4 ដើមពេលព្រីន */
+                page-break-after: avoid !important;
+                page-break-before: avoid !important;
+                page-break-inside: avoid !important;
+            }
+            .cv-sidebar {
+                padding: 45px 25px !important;
+            }
+            .cv-main {
+                padding: 50px 40px !important;
+            }
+            .avatar-glow {
+                width: 140px !important;
+                height: 140px !important;
+            }
+            .cv-header-title h1 {
+                font-size: 2.4rem !important;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 0mm;
             }
         }
     </style>
@@ -221,13 +399,14 @@
     <canvas id="bg-canvas"></canvas>
     <div id="header-container"></div>
 
-    <main class="page-container" style="max-width: 1250px; padding-top: 110px;">
+    <main class="page-container">
         <section class="section-title">
             <h2>Professional CV <span>Builder</span></h2>
             <p>បញ្ចូលព័ត៌មាន និងអាប់ឡូតរូបភាពដើម្បីបង្កើត CV បែបអាជីពដែលមានចលនាស្អាត និងអាច Download ជា PDF បាន</p>
         </section>
 
         <div class="cv-builder-wrapper">
+            <!-- ផ្នែក Input Form -->
             <div class="cv-input-section">
                 <h3><i class="fa-solid fa-user-pen"></i> ១. ព័ត៌មានផ្ទាល់ខ្លួន (Personal Info)</h3>
                 
@@ -280,6 +459,7 @@
                 </button>
             </div>
 
+            <!-- ផ្នែក Preview CV Sheet -->
             <div class="cv-preview-section">
                 <div class="cv-sheet floating-cv" id="cv-print-area">
                     <div class="cv-sidebar">
@@ -355,8 +535,48 @@
     <div id="footer-container"></div>
     <script src="../script.js"></script>
     <script>
-        // ទាញយក Header មកដាក់រួចហៅ Function ស្វ័យប្រវត្តិ
-        fetch('header.html') // បើនៅ index.html ដាក់ 'More/header.html'
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('cv-profile-img').src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function updateCV() {
+            const fullname = document.getElementById('in-fullname').value;
+            const title = document.getElementById('in-title').value;
+            const phone = document.getElementById('in-phone').value;
+            const email = document.getElementById('in-email').value;
+            const address = document.getElementById('in-address').value;
+            const education = document.getElementById('in-education').value;
+            const goal = document.getElementById('in-goal').value;
+            const hobbies = document.getElementById('in-hobbies').value;
+            const skills = document.getElementById('in-skills').value;
+
+            if(fullname) document.getElementById('p-fullname').innerText = fullname;
+            if(title) document.getElementById('p-title').innerText = title;
+            if(phone) document.getElementById('p-phone').innerText = phone;
+            if(email) document.getElementById('p-email').innerText = email;
+            if(address) document.getElementById('p-address').innerText = address;
+            if(education) document.getElementById('p-education').innerText = education;
+            if(goal) document.getElementById('p-goal').innerText = goal;
+            if(hobbies) document.getElementById('p-hobbies').innerText = hobbies;
+            
+            if(skills) {
+                const skillsContainer = document.getElementById('p-skills');
+                skillsContainer.innerHTML = '';
+                skills.split(',').forEach(skill => {
+                    if(skill.trim() !== '') {
+                        const span = document.createElement('span');
+                        span.innerText = skill.trim();
+                        skillsContainer.appendChild(span);
+                    }
+                });
+            }
+        }
+
+        fetch('header.html')
             .then(res => res.text())
             .then(data => {
                 document.getElementById('header-container').innerHTML = data;
@@ -364,7 +584,7 @@
                 initHeaderEvents();
             });
 
-        fetch('footer.html') // បើនៅ index.html ដាក់ 'More/footer.html'
+        fetch('footer.html')
             .then(res => res.text())
             .then(data => {
                 document.getElementById('footer-container').innerHTML = data;
